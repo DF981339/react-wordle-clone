@@ -1,6 +1,6 @@
-export const ADD_CHARACTER = "ADD_CHARACTER";
+import { initialState } from "./initialState";
 
-export const initialState = {};
+export const ADD_CHARACTER = "ADD_CHARACTER";
 
 const reducer = (state, action) => {
   switch (action.type) {

@@ -1,7 +1,9 @@
 import { WordProvider } from "./context/WordProvider";
-import reducer, { initialState } from "./context/reducer";
+import reducer from "./context/reducer";
+import { initialState } from "./context/initialState";
 import styled, { createGlobalStyle } from "styled-components";
 import Keyboard from "./components/Keyboard";
+import Guesses from "./components/Guesses";
 
 function App() {
   return (
@@ -10,7 +12,7 @@ function App() {
       <WordProvider inititalState={initialState} reducer={reducer}>
         <Container>
           <div>header</div>
-          <div>body</div>
+          <Guesses />
           <Keyboard />
         </Container>
       </WordProvider>
