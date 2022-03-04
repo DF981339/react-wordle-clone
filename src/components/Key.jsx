@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Key = ({ value }) => {
+const Key = ({ value, status }) => {
   return value.match(/\w[a-z]/) ? (
     value === "delete" ? (
       // delete key
@@ -23,7 +23,9 @@ const Key = ({ value }) => {
       <LargeKey value={value}>{value}</LargeKey>
     )
   ) : (
-    <LetterKey value={value}>{value}</LetterKey>
+    <LetterKey value={value} status={status}>
+      {value}
+    </LetterKey>
   );
 };
 
@@ -55,21 +57,25 @@ const LetterKey = styled.button`
     --lightness-offset: 10%;
   }
 
-  .wrong {
-    --lightness: 23%;
-  }
-
-  .wrong-location {
-    --hue: 49;
-    --saturation: 51%;
-    --lightness: 47%;
-  }
-
-  .correct {
-    --hue: 115;
-    --saturation: 29%;
-    --lightness: 43%;
-  }
+  ${(props) => {
+    if (props.status === "wrong") {
+      return `
+          --lightness: 23%;
+        `;
+    } else if (props.status === "wrong-location") {
+      return `
+          --hue: 49;
+          --saturation: 51%;
+          --lightness: 47%;
+        `;
+    } else if (props.status === "correct") {
+      return `
+          --hue: 115;
+          --saturation: 29%;
+          --lightness: 43%;
+        `;
+    }
+  }}
 `;
 
 const LargeKey = styled(LetterKey)`

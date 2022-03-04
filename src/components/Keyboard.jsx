@@ -7,20 +7,20 @@ const Keyboard = () => {
   return (
     <KeyboardContainer>
       {/* ROW 1 */}
-      {keyboardLayout.row1.map((key) => (
-        <Key key={key} value={key} />
+      {keyboardLayout.row1.map(({ key, status }) => (
+        <Key key={key} value={key} status={status} />
       ))}
 
       {/* ROW 2 */}
       <div className="space"></div>
-      {keyboardLayout.row2.map((key) => (
-        <Key key={key} value={key} />
+      {keyboardLayout.row2.map(({ key, status }) => (
+        <Key key={key} value={key} status={status} />
       ))}
       <div className="space"></div>
 
       {/* ROW 3 */}
-      {keyboardLayout.row3.map((key) => (
-        <Key key={key} value={key} />
+      {keyboardLayout.row3.map(({ key, status }) => (
+        <Key key={key} value={key} status={status} />
       ))}
     </KeyboardContainer>
   );
