@@ -16,6 +16,8 @@ const Keyboard = () => {
   }, []);
 
   const handleKeyPress = (e) => {
+    if (e.ctrlKey || e.metaKey) return;
+
     if (e.key === "Enter") {
       return;
     }
