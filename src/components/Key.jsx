@@ -1,11 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import { useWord } from "../context/WordProvider";
 
 const Key = ({ value, status }) => {
+  const [state, dispatch] = useWord();
+
+  const handleDelete = () => {};
+  const handleEnter = () => {};
+  const handleAddKey = () => {};
+
   return value.match(/\w[a-z]/) ? (
     value === "delete" ? (
       // delete key
-      <LargeKey value={value}>
+      <LargeKey
+        value={value}
+        onClick={state.disableInteraction ? null : handleDelete}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="24"
@@ -20,10 +30,19 @@ const Key = ({ value, status }) => {
       </LargeKey>
     ) : (
       // enter key
-      <LargeKey value={value}>{value}</LargeKey>
+      <LargeKey
+        value={value}
+        onClick={state.disableInteraction ? null : handleEnter}
+      >
+        {value}
+      </LargeKey>
     )
   ) : (
-    <LetterKey value={value} status={status}>
+    <LetterKey
+      value={value}
+      status={status}
+      onClick={state.disableInteraction ? null : handleAddKey}
+    >
       {value}
     </LetterKey>
   );

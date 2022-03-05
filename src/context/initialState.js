@@ -187,4 +187,5 @@ export const initialState = {
       { key: "delete", status: "N/A" },
     ],
   },
+  disableInteraction: false,
 };

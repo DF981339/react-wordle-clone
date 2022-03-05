@@ -1,10 +1,32 @@
-import React from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
 import Key from "./Key";
 
 const Keyboard = () => {
   const [state, dispatch] = useWord();
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      return;
+    }
+
+    if (e.key === "Backspace") {
+      return;
+    }
+
+    if (e.key.match(/^[a-z]$/)) {
+      return;
+    }
+  };
 
   return (
     <KeyboardContainer>
