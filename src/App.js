@@ -4,6 +4,7 @@ import { initialState } from "./context/initialState";
 import styled, { createGlobalStyle } from "styled-components";
 import Keyboard from "./components/Keyboard";
 import Guesses from "./components/Guesses";
+import Header from "./components/Header";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <GlobalStyle />
       <WordProvider inititalState={initialState} reducer={reducer}>
         <Container>
-          <div>header</div>
+          <Header />
           <Guesses />
           <Keyboard />
         </Container>
@@ -38,7 +39,6 @@ const GlobalStyle = createGlobalStyle`
 
 const Container = styled.main`
   max-width: 700px;
-  border: 1px solid white;
 
   height: 100vh;
   padding: 6px;
