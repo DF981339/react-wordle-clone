@@ -1,8 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { useWord } from "../context/WordProvider";
+import { SHAKE_TILE_RESET } from "../context/reducer";
 
-const Tile = ({ value, status }) => {
-  return <TileContainer status={status}>{value}</TileContainer>;
+const Tile = ({ value, status, shake }) => {
+  const [state, dispatch] = useWord();
+
+  return (
+    <TileContainer
+      status={status}
+      shake={shake}
+      onAnimationEnd={() => dispatch({ type: SHAKE_TILE_RESET })}
+    >
+      {value}
+    </TileContainer>
+  );
 };
 
 export default Tile;
@@ -41,4 +53,35 @@ const TileContainer = styled.div`
         `;
     }
   }}
+
+  ${(props) => {
+    if (props.shake) {
+      return `
+          animation: Shake 0.5s ease-in-out;
+        `;
+    }
+  }}
+
+  @keyframes Shake {
+    10%,
+    90% {
+      transform: translateX(-5%);
+    }
+
+    20%,
+    80% {
+      transform: translateX(5%);
+    }
+
+    30%,
+    50%,
+    70% {
+      transform: translateX(-7.5%);
+    }
+
+    40%,
+    60% {
+      transform: translateX(7.5%);
+    }
+  }
 `;

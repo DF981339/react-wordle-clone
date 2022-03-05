@@ -7,6 +7,7 @@ export const ADD_LETTER = "ADD_LETTER";
 export const DELETE_LETTER = "DELETE_LETTER";
 export const GUESS_WORD = "GUESS_WORD";
 export const REMOVE_ALERT = "REMOVE_ALERT";
+export const SHAKE_TILE_RESET = "SHAKE_TILE_RESET";
 
 const WORD_LENGTH = 5;
 
@@ -24,6 +25,12 @@ const addAlert = (alertMsg) => {
     id: uuidv4(),
     alertMsg: alertMsg,
   };
+};
+
+const shakeTiles = (tilesArray) => {
+  return tilesArray.map((tile) =>
+    tile.status === "active" ? { ...tile, shake: true } : tile
+  );
 };
 
 const reducer = (state, action) => {
@@ -93,7 +100,7 @@ const reducer = (state, action) => {
         // shake active tiles and add alert message
         return {
           ...state,
-          // tiles: shakeTiles(activeTiles),
+          tiles: shakeTiles(state.tiles),
           alerts: [addAlert("Not enough letters"), ...state.alerts],
         };
       }
@@ -102,12 +109,26 @@ const reducer = (state, action) => {
     }
 
     case REMOVE_ALERT: {
+      // make a copy of original alerts array, the remove the last alert from the copy array
       let newAlerts = [...state.alerts];
       if (newAlerts.length !== 0) newAlerts.pop();
 
+      // update the alerts array with the copy array
       return {
         ...state,
         alerts: newAlerts,
+      };
+    }
+
+    case SHAKE_TILE_RESET: {
+      // set shaked tiles back to false
+      const resetShakeTiles = state.tiles.map((tile) =>
+        tile.shake ? { ...tile, shake: false } : tile
+      );
+
+      return {
+        ...state,
+        tiles: resetShakeTiles,
       };
     }
 

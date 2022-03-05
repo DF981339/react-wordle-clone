@@ -9,8 +9,8 @@ const Guesses = () => {
   return (
     <GuessGrid>
       {state.alerts.length !== 0 ? <Alerts alertsList={state.alerts} /> : null}
-      {state.tiles.map(({ id, value, status }) => (
-        <Tile key={id} value={value} status={status} />
+      {state.tiles.map(({ id, value, status, shake }) => (
+        <Tile key={id} value={value} status={status} shake={shake} />
       ))}
     </GuessGrid>
   );
