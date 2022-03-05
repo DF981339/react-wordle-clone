@@ -1,12 +1,29 @@
 import { initialState } from "./initialState";
+import { v4 as uuidv4 } from "uuid";
+import dictionary from "../assets/data/dictionary.json";
+import targetWords from "../assets/data/targetWords.json";
 
 export const ADD_LETTER = "ADD_LETTER";
 export const DELETE_LETTER = "DELETE_LETTER";
+export const GUESS_WORD = "GUESS_WORD";
+export const REMOVE_ALERT = "REMOVE_ALERT";
 
 const WORD_LENGTH = 5;
 
+const offsetFromDate = new Date(2022, 0, 1);
+const msOffset = Date.now() - offsetFromDate;
+const dayOffset = msOffset / 1000 / 60 / 60 / 24;
+const targetWord = targetWords[Math.floor(dayOffset)];
+
 const getActiveTiles = (tilesArray) => {
   return tilesArray.filter((tile) => tile.status === "active");
+};
+
+const addAlert = (alertMsg) => {
+  return {
+    id: uuidv4(),
+    alertMsg: alertMsg,
+  };
 };
 
 const reducer = (state, action) => {
@@ -64,6 +81,33 @@ const reducer = (state, action) => {
       return {
         ...state,
         tiles: newTiles,
+      };
+    }
+
+    case GUESS_WORD: {
+      // get active tiles
+      const activeTiles = getActiveTiles(state.tiles);
+
+      // ERROR CHECK: word length is not long enough
+      if (activeTiles.length < WORD_LENGTH) {
+        // shake active tiles and add alert message
+        return {
+          ...state,
+          // tiles: shakeTiles(activeTiles),
+          alerts: [addAlert("Not enough letters"), ...state.alerts],
+        };
+      }
+
+      return state;
+    }
+
+    case REMOVE_ALERT: {
+      let newAlerts = [...state.alerts];
+      if (newAlerts.length !== 0) newAlerts.pop();
+
+      return {
+        ...state,
+        alerts: newAlerts,
       };
     }
 

@@ -1,13 +1,27 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
+import Alerts from "./Alerts";
 import Tile from "./Tile";
 
 const Guesses = () => {
   const [state, dispatch] = useWord();
+  const [showAlerts, setShowAlerts] = useState(true); // UI state
+  const [currAlertsList, setCurrAlertsList] = useState([]);
+
+  useEffect(() => {
+    setCurrAlertsList(state.alerts);
+
+    if (state.alerts.length !== 0) {
+      setShowAlerts(true);
+    } else {
+      setShowAlerts(false);
+    }
+  }, [state.alerts]);
 
   return (
     <GuessGrid>
+      {showAlerts ? <Alerts alertsList={currAlertsList} /> : null}
       {state.tiles.map(({ id, value, status }) => (
         <Tile key={id} value={value} status={status} />
       ))}

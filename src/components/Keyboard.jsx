@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
 import Key from "./Key";
-import { ADD_LETTER, DELETE_LETTER } from "../context/reducer";
+import { ADD_LETTER, DELETE_LETTER, GUESS_WORD } from "../context/reducer";
 
 const Keyboard = () => {
   const [state, dispatch] = useWord();
@@ -19,6 +19,7 @@ const Keyboard = () => {
     if (e.ctrlKey || e.metaKey) return;
 
     if (e.key === "Enter") {
+      dispatch({ type: GUESS_WORD });
       return;
     }
 

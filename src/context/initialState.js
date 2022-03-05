@@ -188,4 +188,5 @@ export const initialState = {
     ],
   },
   disableInteraction: false,
+  alerts: [],
 };
