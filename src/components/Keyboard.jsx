@@ -1,25 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import { keyboardLayout } from "../assets/ui/keyboardLayout";
+import { useWord } from "../context/WordProvider";
 import Key from "./Key";
 
 const Keyboard = () => {
+  const [state, dispatch] = useWord();
+
   return (
     <KeyboardContainer>
       {/* ROW 1 */}
-      {keyboardLayout.row1.map(({ key, status }) => (
+      {state.keyboard.row1.map(({ key, status }) => (
         <Key key={key} value={key} status={status} />
       ))}
 
       {/* ROW 2 */}
       <div className="space"></div>
-      {keyboardLayout.row2.map(({ key, status }) => (
+      {state.keyboard.row2.map(({ key, status }) => (
         <Key key={key} value={key} status={status} />
       ))}
       <div className="space"></div>
 
       {/* ROW 3 */}
-      {keyboardLayout.row3.map(({ key, status }) => (
+      {state.keyboard.row3.map(({ key, status }) => (
         <Key key={key} value={key} status={status} />
       ))}
     </KeyboardContainer>
