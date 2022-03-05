@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { ADD_LETTER } from "../context/reducer";
+import { ADD_LETTER, DELETE_LETTER } from "../context/reducer";
 import { useWord } from "../context/WordProvider";
 
 const Key = ({ value, status }) => {
   const [state, dispatch] = useWord();
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    dispatch({ type: DELETE_LETTER });
+  };
   const handleEnter = () => {};
   const handleAddKey = (e) => {
     dispatch({

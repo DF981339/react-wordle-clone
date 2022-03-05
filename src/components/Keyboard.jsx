@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
 import Key from "./Key";
-import { ADD_LETTER } from "../context/reducer";
+import { ADD_LETTER, DELETE_LETTER } from "../context/reducer";
 
 const Keyboard = () => {
   const [state, dispatch] = useWord();
@@ -23,6 +23,7 @@ const Keyboard = () => {
     }
 
     if (e.key === "Backspace") {
+      dispatch({ type: DELETE_LETTER });
       return;
     }
 
