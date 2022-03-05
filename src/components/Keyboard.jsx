@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
 import Key from "./Key";
+import { ADD_LETTER } from "../context/reducer";
 
 const Keyboard = () => {
   const [state, dispatch] = useWord();
@@ -24,6 +25,12 @@ const Keyboard = () => {
     }
 
     if (e.key.match(/^[a-z]$/)) {
+      dispatch({
+        type: ADD_LETTER,
+        payload: {
+          letter: e.key,
+        },
+      });
       return;
     }
   };

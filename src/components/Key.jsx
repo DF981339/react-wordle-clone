@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { ADD_LETTER } from "../context/reducer";
 import { useWord } from "../context/WordProvider";
 
 const Key = ({ value, status }) => {
@@ -7,7 +8,14 @@ const Key = ({ value, status }) => {
 
   const handleDelete = () => {};
   const handleEnter = () => {};
-  const handleAddKey = () => {};
+  const handleAddKey = (e) => {
+    dispatch({
+      type: ADD_LETTER,
+      payload: {
+        letter: e.target.value,
+      },
+    });
+  };
 
   return value.match(/\w[a-z]/) ? (
     value === "delete" ? (
