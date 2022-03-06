@@ -8,12 +8,14 @@ import {
   UPDATE_TILE_STATUS,
   WORD_LENGTH,
   UPDATE_KEY_STATUS,
-  ENABLE_INTERACTION,
+  CHECK_WIN_LOSE,
+  BOUNCE_ANIMATION_DURATION,
 } from "../context/reducer";
 
-const Tile = ({ value, status, shake, flip, id, index }) => {
+const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
   const [state, dispatch] = useWord();
   const [flipNow, setFlipNow] = useState(false);
+  const [bounceNow, setBounceNow] = useState(false);
 
   // flip animation, one after another
   useEffect(() => {
@@ -25,6 +27,17 @@ const Tile = ({ value, status, shake, flip, id, index }) => {
 
     return () => clearTimeout(flipTimer);
   }, [flip]);
+
+  // bounce animation, one after another
+  useEffect(() => {
+    const bounceTimer = setTimeout(() => {
+      if (bounce) {
+        setBounceNow(true);
+      }
+    }, ((index % WORD_LENGTH) * BOUNCE_ANIMATION_DURATION) / 5);
+
+    return () => clearTimeout(bounceTimer);
+  }, [bounce]);
 
   const handleTransitionEnd = () => {
     setFlipNow(false);
@@ -41,7 +54,7 @@ const Tile = ({ value, status, shake, flip, id, index }) => {
       payload: { id: id },
     });
     dispatch({
-      type: ENABLE_INTERACTION,
+      type: CHECK_WIN_LOSE,
     });
   };
 
@@ -52,6 +65,7 @@ const Tile = ({ value, status, shake, flip, id, index }) => {
       onAnimationEnd={() => dispatch({ type: SHAKE_TILE_RESET })}
       flip={flipNow}
       onTransitionEnd={flipNow ? handleTransitionEnd : null}
+      bounce={bounceNow}
     >
       {value}
     </TileContainer>
@@ -134,4 +148,39 @@ const TileContainer = styled.div`
         `;
     }
   }}
+
+  ${(props) => {
+    if (props.bounce) {
+      return `
+          animation: Bounce 0.5s ease-in-out;
+        `;
+    }
+  }}
+
+  @keyframes Bounce {
+    0%,
+    20% {
+      transform: translateY(0);
+    }
+
+    40% {
+      transform: translateY(-50%);
+    }
+
+    50% {
+      transform: translateY(5%);
+    }
+
+    60% {
+      transform: translateY(-25%);
+    }
+
+    80% {
+      transform: translateY(2.5%);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
 `;

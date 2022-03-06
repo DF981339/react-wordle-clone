@@ -8,9 +8,12 @@ const AlertItem = ({ message }) => {
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
-    const opacityTimer = setTimeout(() => {
-      setOpacity(0);
-    }, 1000);
+    const opacityTimer = setTimeout(
+      () => {
+        setOpacity(0);
+      },
+      state.win ? 2500 : 1000
+    );
 
     return () => clearTimeout(opacityTimer);
   }, []);

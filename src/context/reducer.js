@@ -11,9 +11,10 @@ export const SHAKE_TILE_RESET = "SHAKE_TILE_RESET";
 export const FLIP_TILE_RESET = "FLIP_TILE_RESET";
 export const UPDATE_TILE_STATUS = "UPDATE_TILE_STATUS";
 export const UPDATE_KEY_STATUS = "UPDATE_KEY_STATUS";
-export const ENABLE_INTERACTION = "ENABLE_INTERACTION";
+export const CHECK_WIN_LOSE = "CHECK_WIN_LOSE";
 
 export const FLIP_ANIMATION_DURATION = 500;
+export const BOUNCE_ANIMATION_DURATION = 500;
 export const WORD_LENGTH = 5;
 
 const offsetFromDate = new Date(2022, 0, 1);
@@ -41,6 +42,14 @@ const shakeTiles = (tilesArray) => {
 const flipTiles = (tilesArray) => {
   return tilesArray.map((tile) =>
     tile.status === "active" ? { ...tile, flip: true } : tile
+  );
+};
+
+const bounceTiles = (tilesArray, currentRowArray) => {
+  return tilesArray.map((tile) =>
+    tile.status === "correct" && currentRowArray.includes(tile)
+      ? { ...tile, bounce: true }
+      : tile
   );
 };
 
@@ -271,9 +280,26 @@ const reducer = (state, action) => {
       };
     }
 
-    case ENABLE_INTERACTION: {
-      // CHECK: re-enable interaction after all tiles finish animation
+    case CHECK_WIN_LOSE: {
+      // only check win/lose when there is no more active tiles
       if (getActiveTiles(state.tiles).length === 0) {
+        // get all done tiles
+        const doneTiles = state.tiles.filter((tile) => tile.status !== "none");
+        // get the last five tiles as an array
+        const currentRow = doneTiles.slice(-5);
+
+        // check win/lose
+        if (currentRow.every((tile) => tile.status === "correct")) {
+          return {
+            ...state,
+            tiles: bounceTiles(state.tiles, currentRow),
+            alerts: [addAlert("Win")],
+            win: true,
+            disableInteraction: true,
+          };
+        }
+
+        // game continues
         return {
           ...state,
           disableInteraction: false,

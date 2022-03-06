@@ -6,6 +6,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 2,
@@ -13,6 +14,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 3,
@@ -20,6 +22,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 4,
@@ -27,6 +30,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 5,
@@ -34,6 +38,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 6,
@@ -41,6 +46,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 7,
@@ -48,6 +54,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 8,
@@ -55,6 +62,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 9,
@@ -62,6 +70,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 10,
@@ -69,6 +78,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 11,
@@ -76,6 +86,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 12,
@@ -83,6 +94,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 13,
@@ -90,6 +102,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 14,
@@ -97,6 +110,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 15,
@@ -104,6 +118,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 16,
@@ -111,6 +126,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 17,
@@ -118,6 +134,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 18,
@@ -125,6 +142,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 19,
@@ -132,6 +150,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 20,
@@ -139,6 +158,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 21,
@@ -146,6 +166,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 22,
@@ -153,6 +174,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 23,
@@ -160,6 +182,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 24,
@@ -167,6 +190,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 25,
@@ -174,6 +198,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 26,
@@ -181,6 +206,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 27,
@@ -188,6 +214,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 28,
@@ -195,6 +222,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 29,
@@ -202,6 +230,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
     {
       id: 30,
@@ -209,6 +238,7 @@ export const initialState = {
       status: "none",
       shake: false,
       flip: false,
+      bounce: false,
     },
   ],
   keyboard: [
@@ -245,4 +275,5 @@ export const initialState = {
   ],
   disableInteraction: false,
   alerts: [],
+  win: false,
 };
