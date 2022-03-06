@@ -90,7 +90,8 @@ const TileContainer = styled.div`
   ${(props) => {
     if (props.status === "active") {
       return `
-          border-color: hsl(200, 1%, 34%);  
+          border-color: hsl(200, 1%, 34%);
+          animation: Pop 0.1s;
         `;
     } else if (props.status === "wrong") {
       return `
@@ -181,6 +182,18 @@ const TileContainer = styled.div`
 
     100% {
       transform: translateY(0);
+    }
+  }
+
+  @keyframes Pop {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    40% {
+      transform: scale(1.1);
+      opacity: 1;
     }
   }
 `;
