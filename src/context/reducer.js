@@ -11,6 +11,7 @@ export const SHAKE_TILE_RESET = "SHAKE_TILE_RESET";
 export const FLIP_TILE_RESET = "FLIP_TILE_RESET";
 export const UPDATE_TILE_STATUS = "UPDATE_TILE_STATUS";
 export const UPDATE_KEY_STATUS = "UPDATE_KEY_STATUS";
+export const ENABLE_INTERACTION = "ENABLE_INTERACTION";
 
 export const FLIP_ANIMATION_DURATION = 500;
 export const WORD_LENGTH = 5;
@@ -185,14 +186,6 @@ const reducer = (state, action) => {
     }
 
     case UPDATE_TILE_STATUS: {
-      // CHECK: re-enable interaction after all tiles finish animation
-      if (getActiveTiles(state.tiles).length === 0) {
-        return {
-          ...state,
-          disableInteraction: false,
-        };
-      }
-
       // target current tile
       const currentTile = state.tiles.find(
         (tile) => tile.id === action.payload.id
@@ -276,6 +269,18 @@ const reducer = (state, action) => {
         ...state,
         keyboard: newKeyboard,
       };
+    }
+
+    case ENABLE_INTERACTION: {
+      // CHECK: re-enable interaction after all tiles finish animation
+      if (getActiveTiles(state.tiles).length === 0) {
+        return {
+          ...state,
+          disableInteraction: false,
+        };
+      }
+
+      return state;
     }
 
     default:

@@ -8,6 +8,7 @@ import {
   UPDATE_TILE_STATUS,
   WORD_LENGTH,
   UPDATE_KEY_STATUS,
+  ENABLE_INTERACTION,
 } from "../context/reducer";
 
 const Tile = ({ value, status, shake, flip, id, index }) => {
@@ -39,6 +40,9 @@ const Tile = ({ value, status, shake, flip, id, index }) => {
       type: UPDATE_KEY_STATUS,
       payload: { id: id },
     });
+    dispatch({
+      type: ENABLE_INTERACTION,
+    });
   };
 
   return (
@@ -47,7 +51,7 @@ const Tile = ({ value, status, shake, flip, id, index }) => {
       shake={shake}
       onAnimationEnd={() => dispatch({ type: SHAKE_TILE_RESET })}
       flip={flipNow}
-      onTransitionEnd={handleTransitionEnd}
+      onTransitionEnd={flipNow ? handleTransitionEnd : null}
     >
       {value}
     </TileContainer>
