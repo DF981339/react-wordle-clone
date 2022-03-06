@@ -8,7 +8,9 @@ export const DELETE_LETTER = "DELETE_LETTER";
 export const GUESS_WORD = "GUESS_WORD";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const SHAKE_TILE_RESET = "SHAKE_TILE_RESET";
+export const FLIP_TILE_RESET = "FLIP_TILE_RESET";
 
+export const FLIP_ANIMATION_DURATION = 500;
 const WORD_LENGTH = 5;
 
 const offsetFromDate = new Date(2022, 0, 1);
@@ -30,6 +32,12 @@ const addAlert = (alertMsg) => {
 const shakeTiles = (tilesArray) => {
   return tilesArray.map((tile) =>
     tile.status === "active" ? { ...tile, shake: true } : tile
+  );
+};
+
+const flipTiles = (tilesArray) => {
+  return tilesArray.map((tile) =>
+    tile.status === "active" ? { ...tile, flip: true } : tile
   );
 };
 
@@ -105,7 +113,27 @@ const reducer = (state, action) => {
         };
       }
 
-      return state;
+      // convert array of tiles into string
+      const guess = activeTiles.reduce((word, tile) => {
+        return word + tile.value;
+      }, "");
+
+      // ERROR CHECK: word does not exist
+      if (!dictionary.includes(guess)) {
+        // shake active tiles and add alert message
+        return {
+          ...state,
+          tiles: shakeTiles(state.tiles),
+          alerts: [addAlert("Not in word list"), ...state.alerts],
+        };
+      }
+
+      // all check pass, flip tiles
+      return {
+        ...state,
+        disableInteraction: true,
+        tiles: flipTiles(state.tiles),
+      };
     }
 
     case REMOVE_ALERT: {
@@ -129,6 +157,28 @@ const reducer = (state, action) => {
       return {
         ...state,
         tiles: resetShakeTiles,
+      };
+    }
+
+    case FLIP_TILE_RESET: {
+      // target the tile that needed to flip back
+      const flippedTile = state.tiles.find(
+        (tile) => tile.id === action.payload.id
+      );
+
+      // set flip back to false
+      const unFlippedTile = {
+        ...flippedTile,
+        flip: false,
+      };
+
+      // create a copy of original array, then update the tile object with its index
+      const newTiles = [...state.tiles];
+      newTiles[state.tiles.indexOf(flippedTile)] = unFlippedTile;
+
+      return {
+        ...state,
+        tiles: newTiles,
       };
     }
 

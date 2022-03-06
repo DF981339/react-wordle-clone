@@ -8,12 +8,16 @@ const Keyboard = () => {
   const [state, dispatch] = useWord();
 
   useEffect(() => {
+    if (state.disableInteraction) {
+      document.removeEventListener("keydown", handleKeyPress);
+      return;
+    }
     document.addEventListener("keydown", handleKeyPress);
 
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [state.disableInteraction]);
 
   const handleKeyPress = (e) => {
     if (e.ctrlKey || e.metaKey) return;

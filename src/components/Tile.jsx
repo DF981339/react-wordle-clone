@@ -1,16 +1,42 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
-import { SHAKE_TILE_RESET } from "../context/reducer";
+import {
+  SHAKE_TILE_RESET,
+  FLIP_TILE_RESET,
+  FLIP_ANIMATION_DURATION,
+} from "../context/reducer";
 
-const Tile = ({ value, status, shake }) => {
+const Tile = ({ value, status, shake, flip, id, index }) => {
   const [state, dispatch] = useWord();
+  const [flipNow, setFlipNow] = useState(false);
+
+  // flip animation, one after another
+  useEffect(() => {
+    const flipTimer = setTimeout(() => {
+      if (flip) {
+        setFlipNow(true);
+      }
+    }, (index * FLIP_ANIMATION_DURATION) / 2);
+
+    return () => clearTimeout(flipTimer);
+  }, [flip]);
+
+  const handleTransitionEnd = () => {
+    setFlipNow(false);
+    dispatch({
+      type: FLIP_TILE_RESET,
+      payload: { id: id },
+    });
+  };
 
   return (
     <TileContainer
       status={status}
       shake={shake}
       onAnimationEnd={() => dispatch({ type: SHAKE_TILE_RESET })}
+      flip={flipNow}
+      onTransitionEnd={handleTransitionEnd}
     >
       {value}
     </TileContainer>
@@ -30,6 +56,7 @@ const TileContainer = styled.div`
   align-items: center;
   text-transform: uppercase;
   user-select: none;
+  transition: transform 250ms linear;
 
   ${(props) => {
     if (props.status === "active") {
@@ -84,4 +111,12 @@ const TileContainer = styled.div`
       transform: translateX(7.5%);
     }
   }
+
+  ${(props) => {
+    if (props.flip) {
+      return `
+          transform: rotateX(90deg);
+        `;
+    }
+  }}
 `;
