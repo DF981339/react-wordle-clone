@@ -10,9 +10,10 @@ export const REMOVE_ALERT = "REMOVE_ALERT";
 export const SHAKE_TILE_RESET = "SHAKE_TILE_RESET";
 export const FLIP_TILE_RESET = "FLIP_TILE_RESET";
 export const UPDATE_TILE_STATUS = "UPDATE_TILE_STATUS";
+export const UPDATE_KEY_STATUS = "UPDATE_KEY_STATUS";
 
 export const FLIP_ANIMATION_DURATION = 500;
-const WORD_LENGTH = 5;
+export const WORD_LENGTH = 5;
 
 const offsetFromDate = new Date(2022, 0, 1);
 const msOffset = Date.now() - offsetFromDate;
@@ -247,6 +248,33 @@ const reducer = (state, action) => {
       return {
         ...state,
         tiles: newTiles,
+      };
+    }
+
+    case UPDATE_KEY_STATUS: {
+      // target current tile
+      const currentTile = state.tiles.find(
+        (tile) => tile.id === action.payload.id
+      );
+
+      // target key based on current tile value
+      const currentKey = state.keyboard.find(
+        (key) => key.key === currentTile.value
+      );
+
+      // set status for current key
+      const updatedStatusKey = {
+        ...currentKey,
+        status: currentTile.status,
+      };
+
+      // create a copy of original array, then update the key object with its index
+      const newKeyboard = [...state.keyboard];
+      newKeyboard[state.keyboard.indexOf(currentKey)] = updatedStatusKey;
+
+      return {
+        ...state,
+        keyboard: newKeyboard,
       };
     }
 
