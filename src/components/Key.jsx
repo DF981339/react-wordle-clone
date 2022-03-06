@@ -42,6 +42,8 @@ const Key = ({ value, status }) => {
           ></path>
         </svg>
       </LargeKey>
+    ) : value === "emptyLeft" || value === "emptyRight" ? (
+      <div className="space"></div>
     ) : (
       // enter key
       <LargeKey

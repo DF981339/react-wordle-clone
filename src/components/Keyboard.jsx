@@ -45,20 +45,7 @@ const Keyboard = () => {
 
   return (
     <KeyboardContainer>
-      {/* ROW 1 */}
-      {state.keyboard.row1.map(({ key, status }) => (
-        <Key key={key} value={key} status={status} />
-      ))}
-
-      {/* ROW 2 */}
-      <div className="space"></div>
-      {state.keyboard.row2.map(({ key, status }) => (
-        <Key key={key} value={key} status={status} />
-      ))}
-      <div className="space"></div>
-
-      {/* ROW 3 */}
-      {state.keyboard.row3.map(({ key, status }) => (
+      {state.keyboard.map(({ key, status }) => (
         <Key key={key} value={key} status={status} />
       ))}
     </KeyboardContainer>
