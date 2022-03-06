@@ -9,6 +9,7 @@ export const GUESS_WORD = "GUESS_WORD";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const SHAKE_TILE_RESET = "SHAKE_TILE_RESET";
 export const FLIP_TILE_RESET = "FLIP_TILE_RESET";
+export const UPDATE_TILE_STATUS = "UPDATE_TILE_STATUS";
 
 export const FLIP_ANIMATION_DURATION = 500;
 const WORD_LENGTH = 5;
@@ -175,6 +176,73 @@ const reducer = (state, action) => {
       // create a copy of original array, then update the tile object with its index
       const newTiles = [...state.tiles];
       newTiles[state.tiles.indexOf(flippedTile)] = unFlippedTile;
+
+      return {
+        ...state,
+        tiles: newTiles,
+      };
+    }
+
+    case UPDATE_TILE_STATUS: {
+      // CHECK: re-enable interaction after all tiles finish animation
+      if (getActiveTiles(state.tiles).length === 0) {
+        return {
+          ...state,
+          disableInteraction: false,
+        };
+      }
+
+      // target current tile
+      const currentTile = state.tiles.find(
+        (tile) => tile.id === action.payload.id
+      );
+
+      // letter is correct
+      if (currentTile.value === targetWord[action.payload.index]) {
+        // set status to correct
+        const correctTile = {
+          ...currentTile,
+          status: "correct",
+        };
+
+        // create a copy of original array, then update the tile object with its index
+        const newTiles = [...state.tiles];
+        newTiles[state.tiles.indexOf(currentTile)] = correctTile;
+
+        return {
+          ...state,
+          tiles: newTiles,
+        };
+      }
+
+      // letter is in wrong location
+      if (targetWord.includes(currentTile.value)) {
+        // set status to wrong location
+        const wrongLocationTile = {
+          ...currentTile,
+          status: "wrong-location",
+        };
+
+        // create a copy of original array, then update the tile object with its index
+        const newTiles = [...state.tiles];
+        newTiles[state.tiles.indexOf(currentTile)] = wrongLocationTile;
+
+        return {
+          ...state,
+          tiles: newTiles,
+        };
+      }
+
+      // letter is not in word
+      // set status to wrong
+      const wrongTile = {
+        ...currentTile,
+        status: "wrong",
+      };
+
+      // create a copy of original array, then update the tile object with its index
+      const newTiles = [...state.tiles];
+      newTiles[state.tiles.indexOf(currentTile)] = wrongTile;
 
       return {
         ...state,

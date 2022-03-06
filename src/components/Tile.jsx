@@ -5,6 +5,7 @@ import {
   SHAKE_TILE_RESET,
   FLIP_TILE_RESET,
   FLIP_ANIMATION_DURATION,
+  UPDATE_TILE_STATUS,
 } from "../context/reducer";
 
 const Tile = ({ value, status, shake, flip, id, index }) => {
@@ -17,7 +18,7 @@ const Tile = ({ value, status, shake, flip, id, index }) => {
       if (flip) {
         setFlipNow(true);
       }
-    }, (index * FLIP_ANIMATION_DURATION) / 2);
+    }, ((index % 5) * FLIP_ANIMATION_DURATION) / 2);
 
     return () => clearTimeout(flipTimer);
   }, [flip]);
@@ -27,6 +28,10 @@ const Tile = ({ value, status, shake, flip, id, index }) => {
     dispatch({
       type: FLIP_TILE_RESET,
       payload: { id: id },
+    });
+    dispatch({
+      type: UPDATE_TILE_STATUS,
+      payload: { id: id, index: index % 5 },
     });
   };
 
