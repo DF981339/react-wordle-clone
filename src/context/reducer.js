@@ -2,6 +2,7 @@ import { initialState } from "./initialState";
 import { v4 as uuidv4 } from "uuid";
 import dictionary from "../assets/data/dictionary.json";
 import targetWords from "../assets/data/targetWords.json";
+import winMessages from "../assets/data/winMessages.json";
 
 export const ADD_LETTER = "ADD_LETTER";
 export const DELETE_LETTER = "DELETE_LETTER";
@@ -50,6 +51,13 @@ const bounceTiles = (tilesArray, currentRowArray) => {
     tile.status === "correct" && currentRowArray.includes(tile)
       ? { ...tile, bounce: true }
       : tile
+  );
+};
+
+const winTriesMsg = (numOfTries) => {
+  return (
+    winMessages[numOfTries].charAt(0).toUpperCase() +
+    winMessages[numOfTries].slice(1)
   );
 };
 
@@ -290,10 +298,13 @@ const reducer = (state, action) => {
 
         // check win/lose
         if (currentRow.every((tile) => tile.status === "correct")) {
+          // get which row the current row is
+          const currentRowIndex = Math.floor((currentRow[0].id - 1) / 5);
+
           return {
             ...state,
             tiles: bounceTiles(state.tiles, currentRow),
-            alerts: [addAlert("Win")],
+            alerts: [addAlert(winTriesMsg(currentRowIndex))],
             win: "won",
             disableInteraction: true,
           };
