@@ -275,5 +275,5 @@ export const initialState = {
   ],
   disableInteraction: false,
   alerts: [],
-  win: false,
+  win: "in progress",
 };

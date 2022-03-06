@@ -294,7 +294,20 @@ const reducer = (state, action) => {
             ...state,
             tiles: bounceTiles(state.tiles, currentRow),
             alerts: [addAlert("Win")],
-            win: true,
+            win: "won",
+            disableInteraction: true,
+          };
+        }
+
+        // get remaining tiles
+        const restTiles = state.tiles.filter((tile) => tile.status === "none");
+
+        // check if there is no more guesses
+        if (restTiles.length === 0) {
+          return {
+            ...state,
+            alerts: [addAlert(targetWord.toUpperCase())],
+            win: "lost",
             disableInteraction: true,
           };
         }

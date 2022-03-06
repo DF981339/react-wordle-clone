@@ -10,9 +10,11 @@ const AlertItem = ({ message }) => {
   useEffect(() => {
     const opacityTimer = setTimeout(
       () => {
-        setOpacity(0);
+        if (state.win !== "lost") {
+          setOpacity(0);
+        }
       },
-      state.win ? 2500 : 1000
+      state.win === "won" ? 2500 : 1000
     );
 
     return () => clearTimeout(opacityTimer);
@@ -20,7 +22,9 @@ const AlertItem = ({ message }) => {
 
   return (
     <AlertItemContainer
-      onTransitionEnd={() => dispatch({ type: REMOVE_ALERT })}
+      onTransitionEnd={
+        state.win === "lost" ? null : () => dispatch({ type: REMOVE_ALERT })
+      }
       style={{ opacity: opacity }}
     >
       {message}
