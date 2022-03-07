@@ -11,9 +11,11 @@ import {
   CHECK_WIN_LOSE,
   BOUNCE_ANIMATION_DURATION,
 } from "../context/reducer";
+import { useHelp } from "../context/HelpProvider";
 
 const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
   const [state, dispatch] = useWord();
+  const [showHelp, setShowHelp] = useHelp();
   const [flipNow, setFlipNow] = useState(false);
   const [bounceNow, setBounceNow] = useState(false);
 
@@ -47,14 +49,15 @@ const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
     });
     dispatch({
       type: UPDATE_TILE_STATUS,
-      payload: { id: id, index: index % WORD_LENGTH },
+      payload: { id: id, index: index % WORD_LENGTH, isShowingHelp: showHelp },
     });
     dispatch({
       type: UPDATE_KEY_STATUS,
-      payload: { id: id },
+      payload: { id: id, isShowingHelp: showHelp },
     });
     dispatch({
       type: CHECK_WIN_LOSE,
+      payload: { isShowingHelp: showHelp },
     });
   };
 

@@ -1,0 +1,128 @@
+{
+  "correctExample": [
+    {
+      "id": 101,
+      "value": "w",
+      "status": "correct",
+      "shake": false,
+      "flip": true,
+      "bounce": false
+    },
+    {
+      "id": 102,
+      "value": "e",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 103,
+      "value": "a",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 104,
+      "value": "r",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 105,
+      "value": "y",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    }
+  ],
+  "wrongLocationExample": [
+    {
+      "id": 106,
+      "value": "p",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 107,
+      "value": "i",
+      "status": "wrong-location",
+      "shake": false,
+      "flip": true,
+      "bounce": false
+    },
+    {
+      "id": 108,
+      "value": "l",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 109,
+      "value": "l",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 110,
+      "value": "s",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    }
+  ],
+  "wrongExample": [
+    {
+      "id": 111,
+      "value": "v",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 112,
+      "value": "a",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 113,
+      "value": "g",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    },
+    {
+      "id": 114,
+      "value": "u",
+      "status": "wrong",
+      "shake": false,
+      "flip": true,
+      "bounce": false
+    },
+    {
+      "id": 115,
+      "value": "e",
+      "status": "active",
+      "shake": false,
+      "flip": false,
+      "bounce": false
+    }
+  ]
+}

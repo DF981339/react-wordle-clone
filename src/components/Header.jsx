@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { useHelp } from "../context/HelpProvider";
 
 const Header = () => {
+  const [showHelp, setShowHelp] = useHelp();
+
   return (
     <HeaderContainer>
       <div className="side-icon-left">
@@ -12,6 +15,7 @@ const Header = () => {
           viewBox="0 0 24 24"
           width="24"
           className="header-icon"
+          onClick={setShowHelp}
         >
           <path
             fill="var(--color-tone-1)"

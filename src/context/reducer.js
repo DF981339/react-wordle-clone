@@ -203,6 +203,9 @@ const reducer = (state, action) => {
     }
 
     case UPDATE_TILE_STATUS: {
+      // CHECK: is showing how to play
+      if (action.payload.isShowingHelp) return state;
+
       // target current tile
       const currentTile = state.tiles.find(
         (tile) => tile.id === action.payload.id
@@ -262,6 +265,9 @@ const reducer = (state, action) => {
     }
 
     case UPDATE_KEY_STATUS: {
+      // CHECK: is showing how to play
+      if (action.payload.isShowingHelp) return state;
+
       // target current tile
       const currentTile = state.tiles.find(
         (tile) => tile.id === action.payload.id
@@ -289,6 +295,9 @@ const reducer = (state, action) => {
     }
 
     case CHECK_WIN_LOSE: {
+      // CHECK: is showing how to play
+      if (action.payload.isShowingHelp) return state;
+
       // only check win/lose when there is no more active tiles
       if (getActiveTiles(state.tiles).length === 0) {
         // get all done tiles
