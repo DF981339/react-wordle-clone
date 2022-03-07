@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useHelp } from "../context/HelpProvider";
+import { useHelp, useSetting } from "../context/HeaderFunctionProvider";
 
 const Header = () => {
   const [showHelp, setShowHelp] = useHelp();
+  const [showSetting, setShowSetting] = useSetting();
 
   return (
     <HeaderContainer>
@@ -54,6 +55,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             width="24"
             className="header-icon"
+            onClick={setShowSetting}
           >
             <path
               fill="var(--color-tone-1)"

@@ -11,7 +11,7 @@ import {
   CHECK_WIN_LOSE,
   BOUNCE_ANIMATION_DURATION,
 } from "../context/reducer";
-import { useHelp } from "../context/HelpProvider";
+import { useHelp } from "../context/HeaderFunctionProvider";
 
 const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
   const [state, dispatch] = useWord();

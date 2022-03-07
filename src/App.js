@@ -6,10 +6,12 @@ import Keyboard from "./components/Keyboard";
 import Guesses from "./components/Guesses";
 import Header from "./components/Header";
 import HowToPlay from "./components/HowToPlay";
-import { useHelp } from "./context/HelpProvider";
+import { useHelp, useSetting } from "./context/HeaderFunctionProvider";
+import Setting from "./components/Setting";
 
 function App() {
   const [showHelp, setShowHelp] = useHelp();
+  const [showSetting, setShowSetting] = useSetting();
 
   return (
     <div>
@@ -17,6 +19,7 @@ function App() {
       <WordProvider inititalState={initialState} reducer={reducer}>
         <Container>
           {showHelp ? <HowToPlay /> : null}
+          {showSetting ? <Setting /> : null}
           <Header />
           <Guesses />
           <Keyboard />

@@ -21,7 +21,7 @@ export const WORD_LENGTH = 5;
 const offsetFromDate = new Date(2022, 0, 1);
 const msOffset = Date.now() - offsetFromDate;
 const dayOffset = msOffset / 1000 / 60 / 60 / 24;
-const targetWord = targetWords[Math.floor(dayOffset)];
+export const targetWord = targetWords[Math.floor(dayOffset)];
 
 const getActiveTiles = (tilesArray) => {
   return tilesArray.filter((tile) => tile.status === "active");

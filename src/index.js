@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { HelpProvider } from "./context/HelpProvider";
+import { HeaderFunctionProvider } from "./context/HeaderFunctionProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <HelpProvider>
+    <HeaderFunctionProvider>
       <App />
-    </HelpProvider>
+    </HeaderFunctionProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

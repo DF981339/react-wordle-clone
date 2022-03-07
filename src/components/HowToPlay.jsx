@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import instructionData from "../assets/ui/instructionData.json";
 import Tile from "./Tile";
-import { useHelp } from "../context/HelpProvider";
+import { useHelp } from "../context/HeaderFunctionProvider";
 
 const HowToPlay = () => {
   const [showHelp, setShowHelp] = useHelp();
