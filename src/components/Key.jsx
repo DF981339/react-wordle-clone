@@ -86,6 +86,7 @@ const LetterKey = styled.button`
   border-radius: 0.25em;
   cursor: pointer;
   user-select: none;
+  touch-action: manipulation;
 
   &:hover,
   &:focus {
