@@ -16,7 +16,7 @@ const Setting = () => {
   };
 
   return (
-    <Container
+    <SettingContainer
       animation={slideAnimation}
       onAnimationEnd={slideOutNow ? setShowSetting : null}
     >
@@ -71,22 +71,95 @@ const Setting = () => {
         <div>© {year}, React Wordle Clone</div>
         <div>Answer: {targetWord.toUpperCase()}</div>
       </footer>
-    </Container>
+    </SettingContainer>
   );
 };
 
 export default Setting;
 
-const Container = styled.section`
+const SettingContainer = styled.section`
   position: absolute;
-  color: lightgray;
-  width: 100%;
+  color: var(--dark-mode-header-text);
+  background-color: var(--dark-mode-bg);
+  z-index: 2;
   height: 100%;
-  background-color: hsl(240, 3%, 7%);
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 16px;
-  margin: -6px;
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .title {
+      font-weight: bold;
+      font-size: clamp(16px, 3vmin, 18px);
+    }
+
+    .close {
+      fill: var(--dark-mode-header-icon);
+      position: absolute;
+      right: 0;
+      user-select: none;
+      cursor: pointer;
+
+      &:hover {
+        fill: var(--dark-mode-header-text);
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: clamp(12px, 3vmin, 14px);
+    color: var(--dark-mode-footer-text);
+  }
+
+  .text {
+    text-align: center;
+    font-size: clamp(18px, 3vmin, 20px);
+    border-bottom: 1px solid var(--dark-mode-header-border);
+    padding: 50px 0;
+
+    @media (max-width: 480px) {
+      margin: 0 -16px;
+    }
+
+    .description {
+      font-size: 13px;
+      color: hsl(200, 1%, 51%);
+    }
+  }
+
+  .setting {
+    flex-grow: 1;
+
+    .setting-item {
+      font-size: clamp(15px, 3vmin, 16px);
+      border-bottom: 1px solid var(--dark-mode-header-border);
+      padding: 16px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media (max-width: 480px) {
+        padding: 16px;
+        margin: 0 -16px;
+      }
+
+      .label {
+        font-size: clamp(18px, 3vmin, 20px);
+      }
+
+      a {
+        color: var(--dark-mode-footer-text);
+      }
+    }
+  }
 
   ${(props) => {
     if (props.animation === "up") {
@@ -126,79 +199,5 @@ const Container = styled.section`
       transform: translateY(30px);
       opacity: 0;
     }
-  }
-
-  header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    .title {
-      font-weight: bold;
-      font-size: clamp(16px, 3vmin, 18px);
-    }
-
-    .close {
-      fill: hsl(200, 1%, 51%);
-      position: absolute;
-      right: 0;
-      user-select: none;
-      cursor: pointer;
-
-      &:hover {
-        fill: white;
-      }
-    }
-  }
-
-  .setting {
-    flex-grow: 1;
-
-    .setting-item {
-      font-size: clamp(15px, 3vmin, 16px);
-      border-bottom: 1px solid hsl(200, 1%, 51%);
-      padding: 16px 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      @media (max-width: 480px) {
-        padding: 16px;
-        margin: 0 -16px;
-      }
-
-      .label {
-        font-size: clamp(18px, 3vmin, 20px);
-      }
-
-      a {
-        color: hsl(200, 1%, 51%);
-      }
-    }
-  }
-
-  .text {
-    text-align: center;
-    font-size: clamp(18px, 3vmin, 20px);
-    border-bottom: 1px solid hsl(200, 1%, 51%);
-    padding: 50px 0;
-
-    @media (max-width: 480px) {
-      padding: 50px 16px;
-      margin: 0 -16px;
-    }
-
-    .description {
-      font-size: 13px;
-      color: hsl(200, 1%, 51%);
-    }
-  }
-
-  footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: hsl(200, 1%, 51%);
   }
 `;

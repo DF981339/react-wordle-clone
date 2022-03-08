@@ -15,7 +15,7 @@ const HowToPlay = () => {
   };
 
   return (
-    <Container
+    <HelpContainer
       animation={slideAnimation}
       onAnimationEnd={slideOutNow ? setShowHelp : null}
     >
@@ -92,22 +92,62 @@ const HowToPlay = () => {
       <p className="text">
         <strong>A new WORDLE will be available each day!</strong>
       </p>
-    </Container>
+    </HelpContainer>
   );
 };
 
 export default HowToPlay;
 
-const Container = styled.section`
+const HelpContainer = styled.section`
   position: absolute;
-  color: lightgray;
-  width: 100%;
+  color: var(--dark-mode-header-text);
+  background-color: var(--dark-mode-bg);
+  z-index: 2;
   height: 100%;
-  background-color: hsl(240, 3%, 7%);
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 16px;
-  margin: -6px;
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .title {
+      font-weight: bold;
+      font-size: clamp(16px, 3vmin, 18px);
+    }
+
+    .close {
+      fill: var(--dark-mode-header-icon);
+      position: absolute;
+      right: 0;
+      user-select: none;
+      cursor: pointer;
+
+      &:hover {
+        fill: var(--dark-mode-header-text);
+      }
+    }
+  }
+
+  .examples {
+    border-top: 1px solid var(--dark-mode-header-border);
+    border-bottom: 1px solid var(--dark-mode-header-border);
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 50px);
+      grid-template-rows: repeat(1, 50px);
+      gap: 5px;
+    }
+  }
+
+  .text {
+    font-size: clamp(15px, 3vmin, 16px);
+  }
 
   ${(props) => {
     if (props.animation === "up") {
@@ -147,45 +187,5 @@ const Container = styled.section`
       transform: translateY(30px);
       opacity: 0;
     }
-  }
-
-  header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    .title {
-      font-weight: bold;
-      font-size: clamp(16px, 3vmin, 18px);
-    }
-
-    .close {
-      fill: hsl(200, 1%, 51%);
-      position: absolute;
-      right: 0;
-      user-select: none;
-      cursor: pointer;
-
-      &:hover {
-        fill: white;
-      }
-    }
-  }
-
-  .examples {
-    border-top: 1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
-
-    .example-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 50px);
-      grid-template-rows: repeat(1, 50px);
-      gap: 5px;
-    }
-  }
-
-  .text {
-    font-size: clamp(15px, 3vmin, 16px);
   }
 `;
