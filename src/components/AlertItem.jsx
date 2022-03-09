@@ -36,7 +36,7 @@ export default AlertItem;
 
 const AlertItemContainer = styled.div`
   pointer-events: none;
-  background-color: hsl(204, 7%, 85%);
+  background-color: var(--dark-mode-alert-bg);
   padding: 16px;
   font-weight: bold;
   border-radius: 4px;

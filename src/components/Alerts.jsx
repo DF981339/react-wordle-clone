@@ -16,10 +16,11 @@ export default Alerts;
 
 const AlertsContainer = styled.div`
   position: fixed;
-  top: 10vh;
-  left: 50vw;
-  transform: translate(-50%);
-  z-index: 1;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 10;
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   align-items: center;

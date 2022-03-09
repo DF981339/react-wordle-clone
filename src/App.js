@@ -48,6 +48,7 @@ const GlobalStyle = createGlobalStyle`
     --light-mode-header-icon: hsl(0, 0%, 96%);
     --light-mode-header-border: hsl(214, 9%, 84%);
     --light-mode-footer-text: hsl(200, 2%, 48%);
+    --light-mode-alert-bg: hsl(240, 3%, 7%); /* may need to change */
     --light-mode-correct: hsl(115, 29%, 53%);
     --light-mode-wrong-location: hsl(49, 51%, 57%);
     --light-mode-wrong: hsl(200, 2%, 48%);
@@ -63,6 +64,7 @@ const GlobalStyle = createGlobalStyle`
     --dark-mode-header-icon: hsl(200, 1%, 51%);
     --dark-mode-header-border: hsl(240, 2%, 23%);
     --dark-mode-footer-text: hsl(200, 1%, 51%);
+    --dark-mode-alert-bg: hsl(204, 7%, 85%);
     --dark-mode-correct:hsl(115, 29%, 43%);
     --dark-mode-wrong-location: hsl(49, 51%, 47%);
     --dark-mode-wrong: hsl(240, 2%, 23%);
