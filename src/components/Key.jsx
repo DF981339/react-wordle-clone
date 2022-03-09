@@ -87,6 +87,22 @@ const LetterKey = styled.button`
   &:hover,
   &:focus {
     background-color: hsl(200, 1%, 61%);
+
+    ${(props) => {
+      if (props.status === "wrong") {
+        return `
+          background-color: hsl(240, 2%, 33%);
+        `;
+      } else if (props.status === "wrong-location") {
+        return `
+          background-color: hsl(49, 51%, 57%);
+        `;
+      } else if (props.status === "correct") {
+        return `
+          background-color: hsl(115, 29%, 53%);
+        `;
+      }
+    }}
   }
 
   ${(props) => {
