@@ -37,36 +37,61 @@ const HowToPlay = () => {
         </div>
       </header>
 
-      <div className="instructions">
-        <p className="text">
-          Guess the <strong>WORDLE</strong> in six tries.
-        </p>
-        <p className="text">
-          Each guess mush be a valid five-letter word. Hit the enter button to
-          submit.
-        </p>
-        <p className="text">
-          After each guess, the color of the tiles will change to show how close
-          your guess was to the word.
-        </p>
-      </div>
-
-      <div className="examples">
-        <p>
-          <strong>Examples</strong>
-        </p>
-        <div className="example-grid">
-          {instructionData.correctExample.map(({ id, value, status, flip }) => (
-            <Tile key={id} id={id} value={value} status={status} flip={flip} />
-          ))}
+      <section>
+        <div className="instructions">
+          <p className="text">
+            Guess the <strong>WORDLE</strong> in six tries.
+          </p>
+          <p className="text">
+            Each guess mush be a valid five-letter word. Hit the enter button to
+            submit.
+          </p>
+          <p className="text">
+            After each guess, the color of the tiles will change to show how
+            close your guess was to the word.
+          </p>
         </div>
-        <p className="text">
-          The letter W is in the word and in the correct spot.
-        </p>
 
-        <div className="example-grid">
-          {instructionData.wrongLocationExample.map(
-            ({ id, value, status, flip }) => (
+        <div className="examples">
+          <p>
+            <strong>Examples</strong>
+          </p>
+          <div className="example-grid">
+            {instructionData.correctExample.map(
+              ({ id, value, status, flip }) => (
+                <Tile
+                  key={id}
+                  id={id}
+                  value={value}
+                  status={status}
+                  flip={flip}
+                />
+              )
+            )}
+          </div>
+          <p className="text">
+            The letter W is in the word and in the correct spot.
+          </p>
+
+          <div className="example-grid">
+            {instructionData.wrongLocationExample.map(
+              ({ id, value, status, flip }) => (
+                <Tile
+                  key={id}
+                  id={id}
+                  value={value}
+                  status={status}
+                  flip={flip}
+                />
+              )
+            )}
+          </div>
+          <p className="text">
+            The letter I is in the word but in the wrong spot.
+          </p>
+
+          <div className="example-grid">
+            {instructionData.wrongExample.map(({ id, value, status, flip }) => (
               <Tile
                 key={id}
                 id={id}
@@ -74,24 +99,15 @@ const HowToPlay = () => {
                 status={status}
                 flip={flip}
               />
-            )
-          )}
+            ))}
+          </div>
+          <p className="text">The letter U is not in the word in any spot.</p>
         </div>
+
         <p className="text">
-          The letter I is in the word but in the wrong spot.
+          <strong>A new WORDLE will be available each day!</strong>
         </p>
-
-        <div className="example-grid">
-          {instructionData.wrongExample.map(({ id, value, status, flip }) => (
-            <Tile key={id} id={id} value={value} status={status} flip={flip} />
-          ))}
-        </div>
-        <p className="text">The letter U is not in the word in any spot.</p>
-      </div>
-
-      <p className="text">
-        <strong>A new WORDLE will be available each day!</strong>
-      </p>
+      </section>
     </HelpContainer>
   );
 };
@@ -131,6 +147,10 @@ const HelpContainer = styled.section`
         fill: var(--dark-mode-header-text);
       }
     }
+  }
+
+  section {
+    padding: 0 16px;
   }
 
   .examples {
