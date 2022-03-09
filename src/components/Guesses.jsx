@@ -10,7 +10,9 @@ const Guesses = ({ windowHeight }) => {
 
   return (
     <GuessContainer>
-      <GuessGrid style={{ height: boardHeight, width: boardWidth }}>
+      <GuessGrid
+        style={{ height: `${boardHeight}px`, width: `${boardWidth}px` }}
+      >
         {state.alerts.length !== 0 ? (
           <Alerts alertsList={state.alerts} />
         ) : null}
@@ -25,6 +27,7 @@ const Guesses = ({ windowHeight }) => {
               flip={flip}
               index={index}
               bounce={bounce}
+              tileSize={boardWidth && (boardWidth - 45) / 6}
             />
           )
         )}

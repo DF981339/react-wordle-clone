@@ -13,7 +13,7 @@ import {
 } from "../context/reducer";
 import { useHelp } from "../context/HeaderFunctionProvider";
 
-const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
+const Tile = ({ value, status, shake, flip, id, index, bounce, tileSize }) => {
   const [state, dispatch] = useWord();
   const [showHelp, setShowHelp] = useHelp();
   const [flipNow, setFlipNow] = useState(false);
@@ -69,6 +69,7 @@ const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
       flip={flipNow}
       onTransitionEnd={flipNow ? handleTransitionEnd : null}
       bounce={bounceNow}
+      size={tileSize}
     >
       {value}
     </TileContainer>
@@ -78,7 +79,9 @@ const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
 export default Tile;
 
 const TileContainer = styled.div`
-  font-size: clamp(1.5rem, 2vmin, 2rem);
+  /* font-size: 16px; */
+  font-size: ${(props) =>
+    props.size && `clamp(16px, ${props.size / 1.4}px, 32px)`};
   font-weight: bold;
   color: ${(props) =>
     props.status === "active"
