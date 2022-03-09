@@ -9,20 +9,23 @@ import HowToPlay from "./components/HowToPlay";
 import { useHelp, useSetting } from "./context/HeaderFunctionProvider";
 import Setting from "./components/Setting";
 import useWindowHeight from "./utils/useWindowHeight";
+import UIProps from "./assets/ui/UIProps.json";
+
+const { headerHeight, keyboardHeight, gameMaxWidth } = UIProps;
 
 function App() {
   const [showHelp, setShowHelp] = useHelp();
   const [showSetting, setShowSetting] = useSetting();
-  const height = useWindowHeight(window.innerHeight);
+  const windowHeight = useWindowHeight(window.innerHeight);
 
   return (
-    <Container style={{ height: height }}>
+    <Container style={{ height: windowHeight }}>
       <GlobalStyle />
       <WordProvider inititalState={initialState} reducer={reducer}>
         {showHelp ? <HowToPlay /> : null}
         {showSetting ? <Setting /> : null}
         <Header />
-        {/* <Guesses /> */}
+        <Guesses windowHeight={windowHeight} />
         <Keyboard />
       </WordProvider>
     </Container>
@@ -39,20 +42,21 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --header-height: 60px;
-    --keyboard-height: 212px;
-    --game-max-width: 500px;
+    --header-height: ${headerHeight}px;
+    --keyboard-height: ${keyboardHeight}px;
+    --game-max-width: ${gameMaxWidth}px;
     
     --light-mode-bg: white;
     --light-mode-header-text: black;
     --light-mode-header-icon: hsl(0, 0%, 96%);
     --light-mode-header-border: hsl(214, 9%, 84%);
     --light-mode-footer-text: hsl(200, 2%, 48%);
-    --light-mode-alert-bg: hsl(240, 3%, 7%); /* may need to change */
+    --light-mode-alert-bg: hsl(24, 6%, 15%); /* may need to change */
+    --light-mode-active: hsl(204, 2%, 54%);
     --light-mode-correct: hsl(115, 29%, 53%);
     --light-mode-wrong-location: hsl(49, 51%, 57%);
     --light-mode-wrong: hsl(200, 2%, 48%);
-    --light-mode-tile-border: hsl(204, 2%, 54%);
+    --light-mode-tile-border: hsl(214, 9%, 84%);
     --light-mode-tile-text-before: black;
     --light-mode-tile-text-after: white;
     --light-mode-key-bg: hsl(214, 9%, 84%);
@@ -65,10 +69,11 @@ const GlobalStyle = createGlobalStyle`
     --dark-mode-header-border: hsl(240, 2%, 23%);
     --dark-mode-footer-text: hsl(200, 1%, 51%);
     --dark-mode-alert-bg: hsl(204, 7%, 85%);
-    --dark-mode-correct:hsl(115, 29%, 43%);
+    --dark-mode-active: hsl(210, 1%, 34%);
+    --dark-mode-correct: hsl(115, 29%, 43%);
     --dark-mode-wrong-location: hsl(49, 51%, 47%);
     --dark-mode-wrong: hsl(240, 2%, 23%);
-    --dark-mode-tile-border: hsl(210, 1%, 34%);
+    --dark-mode-tile-border: hsl(240, 2%, 23%);
     --dark-mode-tile-text-before: white;
     --dark-mode-tile-text-after: white;
     --dark-mode-key-bg: hsl(200, 1%, 51%);
@@ -87,8 +92,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Container = styled.main`
-  height: 100%;
   max-width: var(--game-max-width);
   margin: 0 auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;

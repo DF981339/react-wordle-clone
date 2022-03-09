@@ -59,8 +59,8 @@ const KeyboardContainer = styled.section`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(20, 1fr);
-  grid-auto-rows: 60px;
+  grid-template-rows: repeat(3, 1fr);
   gap: 6px;
-  padding: 10px;
+  padding: 0 10px 10px;
   justify-content: center;
 `;
