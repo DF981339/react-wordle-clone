@@ -78,7 +78,7 @@ const Tile = ({ value, status, shake, flip, id, index, bounce }) => {
 export default Tile;
 
 const TileContainer = styled.div`
-  font-size: 2rem; /* might need to use clamp */
+  font-size: clamp(1.5rem, 2vmin, 2rem);
   font-weight: bold;
   color: ${(props) =>
     props.status === "active"
