@@ -75,11 +75,7 @@ const LetterKey = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: hsl(
-    var(--hue, 200),
-    var(--saturation, 1%),
-    calc(var(--lightness-offset, 0%) + var(--lightness, 51%))
-  );
+  background-color: var(--dark-mode-key-bg);
   color: white;
   fill: white;
   text-transform: uppercase;
@@ -90,25 +86,21 @@ const LetterKey = styled.button`
 
   &:hover,
   &:focus {
-    --lightness-offset: 10%;
+    background-color: hsl(200, 1%, 61%);
   }
 
   ${(props) => {
     if (props.status === "wrong") {
       return `
-          --lightness: 23%;
+          background-color: var(--dark-mode-wrong);
         `;
     } else if (props.status === "wrong-location") {
       return `
-          --hue: 49;
-          --saturation: 51%;
-          --lightness: 47%;
+          background-color: var(--dark-mode-wrong-location);
         `;
     } else if (props.status === "correct") {
       return `
-          --hue: 115;
-          --saturation: 29%;
-          --lightness: 43%;
+          background-color: var(--dark-mode-correct);
         `;
     }
   }}

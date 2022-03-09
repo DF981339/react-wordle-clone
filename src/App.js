@@ -22,8 +22,8 @@ function App() {
         {showHelp ? <HowToPlay /> : null}
         {showSetting ? <Setting /> : null}
         <Header />
-        {/* <Guesses />
-        <Keyboard /> */}
+        {/* <Guesses /> */}
+        <Keyboard />
       </WordProvider>
     </Container>
   );
@@ -35,11 +35,12 @@ const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
     font-family: Arial;
+    margin: 0;
   }
 
   :root {
     --header-height: 60px;
-    --keyboard-height: 200px;
+    --keyboard-height: 212px;
     --game-max-width: 500px;
     
     --light-mode-bg: white;
@@ -75,9 +76,13 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: var(--dark-mode-bg);
-    margin: 0;
   }
-  `;
+
+  p {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+  }
+`;
 
 const Container = styled.main`
   height: 100%;
