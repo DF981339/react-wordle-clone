@@ -42,8 +42,6 @@ const GuessContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - var(--header-height) - var(--keyboard-height));
-  overflow: hidden;
 `;
 
 const GuessGrid = styled.section`

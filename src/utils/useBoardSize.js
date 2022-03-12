@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import UIProps from "../assets/ui/UIProps.json";
 
 const { headerHeight, keyboardHeight } = UIProps;
@@ -16,12 +16,16 @@ const useBoardSize = (windowHeight) => {
     setBoardWidth(width);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useLayoutEffect(() => {
+    handleResize();
+  }, [windowHeight]);
 
   return { boardHeight, boardWidth };
 };
