@@ -8,7 +8,7 @@ import Header from "./components/Header";
 import HowToPlay from "./components/HowToPlay";
 import { useHelp, useSetting } from "./context/HeaderFunctionProvider";
 import Setting from "./components/Setting";
-import useWindowHeight from "./utils/useWindowHeight";
+import useWindowSize from "./utils/useWindowSize";
 import UIProps from "./assets/ui/UIProps.json";
 
 const { headerHeight, keyboardHeight, gameMaxWidth } = UIProps;
@@ -16,7 +16,7 @@ const { headerHeight, keyboardHeight, gameMaxWidth } = UIProps;
 function App() {
   const [showHelp, setShowHelp] = useHelp();
   const [showSetting, setShowSetting] = useSetting();
-  const windowHeight = useWindowHeight(window.innerHeight);
+  const { windowHeight } = useWindowSize();
 
   return (
     <Container style={{ height: windowHeight }}>
@@ -25,7 +25,7 @@ function App() {
         {showHelp ? <HowToPlay /> : null}
         {showSetting ? <Setting /> : null}
         <Header />
-        <Guesses windowHeight={windowHeight} />
+        <Guesses />
         <Keyboard />
       </WordProvider>
     </Container>
@@ -97,5 +97,4 @@ const Container = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 `;

@@ -1,15 +1,17 @@
+import { useRef } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
 import Alerts from "./Alerts";
 import Tile from "./Tile";
 import useBoardSize from "../utils/useBoardSize";
 
-const Guesses = ({ windowHeight }) => {
+const Guesses = () => {
   const [state, dispatch] = useWord();
-  const { boardHeight, boardWidth } = useBoardSize(windowHeight);
+  const boardContainerRef = useRef(null);
+  const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
 
   return (
-    <GuessContainer>
+    <GuessContainer ref={boardContainerRef}>
       <GuessGrid
         style={{ height: `${boardHeight}px`, width: `${boardWidth}px` }}
       >
@@ -42,6 +44,8 @@ const GuessContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
+  overflow: hidden;
 `;
 
 const GuessGrid = styled.section`

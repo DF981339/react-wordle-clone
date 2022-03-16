@@ -65,6 +65,7 @@ const HowToPlay = () => {
                   value={value}
                   status={status}
                   flip={flip}
+                  tileSize={50}
                 />
               )
             )}
@@ -82,6 +83,7 @@ const HowToPlay = () => {
                   value={value}
                   status={status}
                   flip={flip}
+                  tileSize={50}
                 />
               )
             )}
@@ -98,6 +100,7 @@ const HowToPlay = () => {
                 value={value}
                 status={status}
                 flip={flip}
+                tileSize={50}
               />
             ))}
           </div>
