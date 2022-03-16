@@ -61,6 +61,6 @@ const KeyboardContainer = styled.section`
   grid-template-columns: repeat(20, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 6px;
-  padding: 0 10px 10px;
+  padding: 0 8px 8px;
   justify-content: center;
 `;

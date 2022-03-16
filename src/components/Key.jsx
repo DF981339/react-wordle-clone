@@ -79,7 +79,7 @@ const LetterKey = styled.button`
   color: white;
   fill: white;
   text-transform: uppercase;
-  border-radius: 0.25em;
+  border-radius: 5px;
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
