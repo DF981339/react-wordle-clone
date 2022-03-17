@@ -84,7 +84,12 @@ const checkRepeatLetter = (letter, index, guess) => {
 };
 
 const checkKeyStatus = (currKeyStatus, currTileStatus) => {
-  if (currKeyStatus === "correct") return "correct";
+  if (currKeyStatus === "correct" && currTileStatus === "wrong-location")
+    return "correct";
+  if (currKeyStatus === "wrong-location" && currTileStatus === "wrong")
+    return "wrong-location";
+  if (currKeyStatus === "correct" && currTileStatus === "wrong")
+    return "correct";
   return currTileStatus;
 };
 
