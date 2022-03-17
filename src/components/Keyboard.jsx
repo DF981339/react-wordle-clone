@@ -55,9 +55,12 @@ const Keyboard = () => {
 export default Keyboard;
 
 const KeyboardContainer = styled.section`
+  height: var(--keyboard-height);
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(20, minmax(12px, 22.5px));
-  grid-auto-rows: 60px;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 6px;
+  padding: 0 8px 8px;
   justify-content: center;
 `;

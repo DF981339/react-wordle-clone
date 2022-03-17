@@ -15,7 +15,7 @@ const HowToPlay = () => {
   };
 
   return (
-    <Container
+    <HelpContainer
       animation={slideAnimation}
       onAnimationEnd={slideOutNow ? setShowHelp : null}
     >
@@ -37,77 +37,140 @@ const HowToPlay = () => {
         </div>
       </header>
 
-      <div className="instructions">
-        <p className="text">
-          Guess the <strong>WORDLE</strong> in six tries.
-        </p>
-        <p className="text">
-          Each guess mush be a valid five-letter word. Hit the enter button to
-          submit.
-        </p>
-        <p className="text">
-          After each guess, the color of the tiles will change to show how close
-          your guess was to the word.
-        </p>
-      </div>
-
-      <div className="examples">
-        <p>
-          <strong>Examples</strong>
-        </p>
-        <div className="example-grid">
-          {instructionData.correctExample.map(({ id, value, status, flip }) => (
-            <Tile key={id} id={id} value={value} status={status} flip={flip} />
-          ))}
+      <section>
+        <div className="instructions">
+          <p className="text">
+            Guess the <strong>WORDLE</strong> in six tries.
+          </p>
+          <p className="text">
+            Each guess mush be a valid five-letter word. Hit the enter button to
+            submit.
+          </p>
+          <p className="text">
+            After each guess, the color of the tiles will change to show how
+            close your guess was to the word.
+          </p>
         </div>
-        <p className="text">
-          The letter W is in the word and in the correct spot.
-        </p>
 
-        <div className="example-grid">
-          {instructionData.wrongLocationExample.map(
-            ({ id, value, status, flip }) => (
+        <div className="examples">
+          <p>
+            <strong>Examples</strong>
+          </p>
+          <div className="example-grid">
+            {instructionData.correctExample.map(
+              ({ id, value, status, flip }) => (
+                <Tile
+                  key={id}
+                  id={id}
+                  value={value}
+                  status={status}
+                  flip={flip}
+                  tileSize={50}
+                />
+              )
+            )}
+          </div>
+          <p className="text">
+            The letter W is in the word and in the correct spot.
+          </p>
+
+          <div className="example-grid">
+            {instructionData.wrongLocationExample.map(
+              ({ id, value, status, flip }) => (
+                <Tile
+                  key={id}
+                  id={id}
+                  value={value}
+                  status={status}
+                  flip={flip}
+                  tileSize={50}
+                />
+              )
+            )}
+          </div>
+          <p className="text">
+            The letter I is in the word but in the wrong spot.
+          </p>
+
+          <div className="example-grid">
+            {instructionData.wrongExample.map(({ id, value, status, flip }) => (
               <Tile
                 key={id}
                 id={id}
                 value={value}
                 status={status}
                 flip={flip}
+                tileSize={50}
               />
-            )
-          )}
+            ))}
+          </div>
+          <p className="text">The letter U is not in the word in any spot.</p>
         </div>
+
         <p className="text">
-          The letter I is in the word but in the wrong spot.
+          <strong>A new WORDLE will be available each day!</strong>
         </p>
-
-        <div className="example-grid">
-          {instructionData.wrongExample.map(({ id, value, status, flip }) => (
-            <Tile key={id} id={id} value={value} status={status} flip={flip} />
-          ))}
-        </div>
-        <p className="text">The letter U is not in the word in any spot.</p>
-      </div>
-
-      <p className="text">
-        <strong>A new WORDLE will be available each day!</strong>
-      </p>
-    </Container>
+      </section>
+    </HelpContainer>
   );
 };
 
 export default HowToPlay;
 
-const Container = styled.section`
+const HelpContainer = styled.section`
   position: absolute;
-  color: lightgray;
-  width: 100%;
+  color: var(--dark-mode-header-text);
+  background-color: var(--dark-mode-bg);
+  z-index: 2;
   height: 100%;
-  background-color: hsl(240, 3%, 7%);
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 16px;
-  margin: -6px;
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .title {
+      font-weight: bold;
+      font-size: clamp(16px, 3vmin, 18px);
+    }
+
+    .close {
+      fill: var(--dark-mode-header-icon);
+      position: absolute;
+      right: 0;
+      user-select: none;
+      cursor: pointer;
+
+      &:hover {
+        fill: var(--dark-mode-header-text);
+      }
+    }
+  }
+
+  section {
+    padding: 0 16px;
+  }
+
+  .examples {
+    border-top: 1px solid var(--dark-mode-header-border);
+    border-bottom: 1px solid var(--dark-mode-header-border);
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 50px);
+      grid-template-rows: repeat(1, 50px);
+      gap: 5px;
+    }
+  }
+
+  .text {
+    font-size: clamp(15px, 3vmin, 16px);
+  }
 
   ${(props) => {
     if (props.animation === "up") {
@@ -147,45 +210,5 @@ const Container = styled.section`
       transform: translateY(30px);
       opacity: 0;
     }
-  }
-
-  header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    .title {
-      font-weight: bold;
-      font-size: clamp(16px, 3vmin, 18px);
-    }
-
-    .close {
-      fill: hsl(200, 1%, 51%);
-      position: absolute;
-      right: 0;
-      user-select: none;
-      cursor: pointer;
-
-      &:hover {
-        fill: white;
-      }
-    }
-  }
-
-  .examples {
-    border-top: 1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
-
-    .example-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 50px);
-      grid-template-rows: repeat(1, 50px);
-      gap: 5px;
-    }
-  }
-
-  .text {
-    font-size: clamp(15px, 3vmin, 16px);
   }
 `;
