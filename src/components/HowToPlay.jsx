@@ -39,10 +39,10 @@ const HowToPlay = () => {
 
       <div className="instructions">
         <p className="text">
-          Guess the <strong>WORDLE</strong> in six tries.
+          Guess the <strong>WORDLE</strong> in 6 tries.
         </p>
         <p className="text">
-          Each guess mush be a valid five-letter word. Hit the enter button to
+          Each guess mush be a valid 5 letter word. Hit the enter button to
           submit.
         </p>
         <p className="text">

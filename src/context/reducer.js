@@ -61,6 +61,33 @@ const winTriesMsg = (numOfTries) => {
   );
 };
 
+const getTargetWordFreq = () => {
+  return targetWord.split("").reduce((freq, char) => {
+    freq[char] ? freq[char]++ : (freq[char] = 1);
+    return freq;
+  }, {});
+};
+
+const checkRepeatLetter = (letter, index, guess) => {
+  const letterFreqOfTargetWord = getTargetWordFreq();
+  const freq = letterFreqOfTargetWord[letter];
+  let lastValidIndex = 0;
+
+  for (let i = 0; i < freq; i++) {
+    if (i > 0) lastValidIndex++;
+    lastValidIndex = guess.indexOf(letter, lastValidIndex);
+  }
+
+  if (lastValidIndex < index) return true;
+
+  return false;
+};
+
+const checkKeyStatus = (currKeyStatus, currTileStatus) => {
+  if (currKeyStatus === "correct") return "correct";
+  return currTileStatus;
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case ADD_LETTER: {
@@ -153,6 +180,7 @@ const reducer = (state, action) => {
         ...state,
         disableInteraction: true,
         tiles: flipTiles(state.tiles),
+        currentGuess: guess,
       };
     }
 
@@ -234,7 +262,13 @@ const reducer = (state, action) => {
         // set status to wrong location
         const wrongLocationTile = {
           ...currentTile,
-          status: "wrong-location",
+          status: checkRepeatLetter(
+            currentTile.value,
+            action.payload.index,
+            state.currentGuess
+          )
+            ? "wrong"
+            : "wrong-location",
         };
 
         // create a copy of original array, then update the tile object with its index
@@ -281,7 +315,7 @@ const reducer = (state, action) => {
       // set status for current key
       const updatedStatusKey = {
         ...currentKey,
-        status: currentTile.status,
+        status: checkKeyStatus(currentKey.status, currentTile.status),
       };
 
       // create a copy of original array, then update the key object with its index

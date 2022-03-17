@@ -276,4 +276,5 @@ export const initialState = {
   disableInteraction: false,
   alerts: [],
   win: "in progress",
+  currentGuess: "",
 };
