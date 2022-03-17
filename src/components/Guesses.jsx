@@ -1,14 +1,20 @@
+import { useRef } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
 import Alerts from "./Alerts";
 import Tile from "./Tile";
+import useBoardSize from "../utils/useBoardSize";
 
 const Guesses = () => {
   const [state, dispatch] = useWord();
+  const boardContainerRef = useRef(null);
+  const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
 
   return (
-    <Container>
-      <GuessGrid>
+    <GuessContainer ref={boardContainerRef}>
+      <GuessGrid
+        style={{ height: `${boardHeight}px`, width: `${boardWidth}px` }}
+      >
         {state.alerts.length !== 0 ? (
           <Alerts alertsList={state.alerts} />
         ) : null}
@@ -23,35 +29,29 @@ const Guesses = () => {
               flip={flip}
               index={index}
               bounce={bounce}
+              tileSize={boardWidth && (boardWidth - 45) / 6}
             />
           )
         )}
       </GuessGrid>
-    </Container>
+    </GuessContainer>
   );
 };
 
 export default Guesses;
 
-const Container = styled.div`
+const GuessContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-
-  @media (max-width: 400px) {
-    padding: 5px;
-  }
+  flex-grow: 1;
+  overflow: hidden;
 `;
 
 const GuessGrid = styled.section`
   display: grid;
-  grid-template-columns: repeat(5, 65px);
-  grid-template-rows: repeat(6, 65px);
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   gap: 5px;
-
-  @media (max-width: 400px) {
-    grid-template-columns: repeat(5, 60px);
-    grid-template-rows: repeat(6, 60px);
-  }
+  padding: 10px;
 `;
