@@ -71,14 +71,23 @@ const getTargetWordFreq = () => {
 const checkRepeatLetter = (letter, index, guess) => {
   const letterFreqOfTargetWord = getTargetWordFreq();
   const freq = letterFreqOfTargetWord[letter];
-  let lastValidIndex = 0;
+  const indexesOfLetter = [];
 
-  for (let i = 0; i < freq; i++) {
-    if (i > 0) lastValidIndex++;
-    lastValidIndex = guess.indexOf(letter, lastValidIndex);
+  // get indexes of repeated letter
+  for (let i = 0; i < guess.length; i++) {
+    if (guess.charAt(i) === letter) {
+      indexesOfLetter.push(i);
+    }
   }
 
-  if (lastValidIndex < index) return true;
+  // if current index is greater than last valid index
+  if (indexesOfLetter[freq - 1] < index) return true;
+
+  const restIndexesAreMatch = indexesOfLetter
+    .filter((i) => i !== index)
+    .every((i) => targetWord[i] === letter);
+
+  if (indexesOfLetter.length > 1 && restIndexesAreMatch) return true;
 
   return false;
 };
