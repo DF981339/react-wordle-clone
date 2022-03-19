@@ -83,11 +83,15 @@ const checkRepeatLetter = (letter, index, guess) => {
   // if current index is greater than last valid index
   if (indexesOfLetter[freq - 1] < index) return true;
 
-  const restIndexesAreMatch = indexesOfLetter
-    .filter((i) => i !== index)
-    .every((i) => targetWord[i] === letter);
+  // check all other indexes greater than itself
+  const restIndexes = indexesOfLetter.filter((i) => i > index);
 
-  if (indexesOfLetter.length > 1 && restIndexesAreMatch) return true;
+  // if it's not empty array, see if matches is the same as occurence
+  if (
+    restIndexes.length > 0 &&
+    restIndexes.filter((i) => targetWord[i] === letter).length === freq
+  )
+    return true;
 
   return false;
 };
