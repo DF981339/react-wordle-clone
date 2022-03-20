@@ -20,6 +20,7 @@ const SwitchContainer = styled.div`
     props.toggle ? "var(--dark-mode-correct)" : "var(--switch-bg)"};
   border-radius: 999px;
   position: relative;
+  cursor: pointer;
 
   .knob {
     position: absolute;
@@ -29,7 +30,6 @@ const SwitchContainer = styled.div`
     width: 16px;
     background-color: var(--switch-knob);
     border-radius: 50%;
-    cursor: pointer;
     transition: transform 0.3s;
 
     ${(props) => {
