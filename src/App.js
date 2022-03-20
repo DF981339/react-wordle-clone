@@ -10,17 +10,19 @@ import { useHelp, useSetting } from "./context/HeaderFunctionProvider";
 import Setting from "./components/Setting";
 import useWindowSize from "./utils/useWindowSize";
 import UIProps from "./assets/ui/UIProps.json";
+import { useTheme } from "./context/ThemeProvider";
 
 const { headerHeight, keyboardHeight, gameMaxWidth } = UIProps;
 
 function App() {
   const [showHelp, setShowHelp] = useHelp();
   const [showSetting, setShowSetting] = useSetting();
+  const [darkTheme, setDarkTheme] = useTheme();
   const { windowHeight } = useWindowSize();
 
   return (
     <Container style={{ height: windowHeight }}>
-      <GlobalStyle />
+      <GlobalStyle darkTheme={darkTheme} />
       <WordProvider inititalState={initialState} reducer={reducer}>
         {showHelp ? <HowToPlay /> : null}
         {showSetting ? <Setting /> : null}
@@ -48,10 +50,11 @@ const GlobalStyle = createGlobalStyle`
     
     --light-mode-bg: white;
     --light-mode-header-text: black;
-    --light-mode-header-icon: hsl(0, 0%, 96%);
+    --light-mode-header-icon: hsl(30, 1%, 48%);
     --light-mode-header-border: hsl(214, 9%, 84%);
     --light-mode-footer-text: hsl(200, 2%, 48%);
     --light-mode-alert-bg: hsl(24, 6%, 15%); /* may need to change */
+    --light-mode-alert-text: hsl(204, 7%, 85%);
     --light-mode-active: hsl(204, 2%, 54%);
     --light-mode-correct: hsl(115, 29%, 53%);
     --light-mode-wrong-location: hsl(49, 51%, 57%);
@@ -69,6 +72,7 @@ const GlobalStyle = createGlobalStyle`
     --dark-mode-header-border: hsl(240, 2%, 23%);
     --dark-mode-footer-text: hsl(200, 1%, 51%);
     --dark-mode-alert-bg: hsl(204, 7%, 85%);
+    --dark-mode-alert-text: hsl(24, 6%, 15%);
     --dark-mode-active: hsl(210, 1%, 34%);
     --dark-mode-correct: hsl(115, 29%, 43%);
     --dark-mode-wrong-location: hsl(49, 51%, 47%);
@@ -79,10 +83,14 @@ const GlobalStyle = createGlobalStyle`
     --dark-mode-key-bg: hsl(200, 1%, 51%);
     --dark-mode-key-text-before: white;
     --dark-mode-key-text-after: white;
+    
+    --switch-bg: hsl(210, 1%, 34%);
+    --switch-knob: white;
   }
 
   body {
-    background-color: var(--dark-mode-bg);
+    background-color: ${(props) =>
+      props.darkTheme ? "var(--dark-mode-bg)" : "var(--light-mode-bg)"};
   }
 
   p {

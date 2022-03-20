@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { HeaderFunctionProvider } from "./context/HeaderFunctionProvider";
+import { ThemeProvider } from "./context/ThemeProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <HeaderFunctionProvider>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </HeaderFunctionProvider>
   </React.StrictMode>,
   document.getElementById("root")
