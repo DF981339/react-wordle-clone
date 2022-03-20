@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
+import { useTheme } from "../context/ThemeProvider";
 import {
   SHAKE_TILE_RESET,
   FLIP_TILE_RESET,
@@ -16,6 +17,7 @@ import { useHelp } from "../context/HeaderFunctionProvider";
 const Tile = ({ value, status, shake, flip, id, index, bounce, tileSize }) => {
   const [state, dispatch] = useWord();
   const [showHelp, setShowHelp] = useHelp();
+  const [darkTheme, setDarkTheme] = useTheme();
   const [flipNow, setFlipNow] = useState(false);
   const [bounceNow, setBounceNow] = useState(false);
 
@@ -69,7 +71,8 @@ const Tile = ({ value, status, shake, flip, id, index, bounce, tileSize }) => {
       flip={flipNow}
       onTransitionEnd={flipNow ? handleTransitionEnd : null}
       bounce={bounceNow}
-      size={tileSize}
+      tileSize={tileSize}
+      darkTheme={darkTheme}
     >
       {value}
     </TileContainer>
@@ -81,13 +84,13 @@ export default Tile;
 const TileContainer = styled.div`
   /* font-size: 16px; */
   font-size: ${(props) =>
-    props.size && `clamp(16px, ${props.size / 1.4}px, 32px)`};
+    props.tileSize && `clamp(16px, ${props.tileSize / 1.4}px, 32px)`};
   font-weight: bold;
-  color: ${(props) =>
-    props.status === "active"
-      ? "var(--dark-mode-tile-text-before)"
-      : "var(--dark-mode-tile-text-after)"};
-  border: 2px solid var(--dark-mode-tile-border);
+  border: 2px solid
+    ${(props) =>
+      props.darkTheme
+        ? "var(--dark-mode-tile-border)"
+        : "var(--light-mode-tile-border)"};
   height: 100%;
   display: flex;
   justify-content: center;
@@ -98,25 +101,69 @@ const TileContainer = styled.div`
 
   ${(props) => {
     if (props.status === "active") {
-      return `
+      if (props.darkTheme) {
+        return `color: var(--dark-mode-tile-text-before);`;
+      } else {
+        return `color: var(--light-mode-tile-text-before);`;
+      }
+    } else {
+      if (props.darkTheme) {
+        return `color: var(--dark-mode-tile-text-after);`;
+      } else {
+        return `color: var(--light-mode-tile-text-after);`;
+      }
+    }
+  }}
+
+  ${(props) => {
+    if (props.status === "active") {
+      if (props.darkTheme) {
+        return `
           border-color: var(--dark-mode-active);
           animation: Pop 0.1s;
         `;
+      } else {
+        return `
+          border-color: var(--light-mode-active);
+          animation: Pop 0.1s;
+        `;
+      }
     } else if (props.status === "wrong") {
-      return `
+      if (props.darkTheme) {
+        return `
           border: none;
           background-color: var(--dark-mode-wrong);
         `;
+      } else {
+        return `
+          border: none;
+          background-color: var(--light-mode-wrong);
+        `;
+      }
     } else if (props.status === "wrong-location") {
-      return `
+      if (props.darkTheme) {
+        return `
           border: none;
           background-color: var(--dark-mode-wrong-location);
         `;
+      } else {
+        return `
+          border: none;
+          background-color: var(--light-mode-wrong-location);
+        `;
+      }
     } else if (props.status === "correct") {
-      return `
+      if (props.darkTheme) {
+        return `
           border: none;
           background-color: var(--dark-mode-correct);
         `;
+      } else {
+        return `
+          border: none;
+          background-color: var(--light-mode-correct);
+        `;
+      }
     }
   }}
 

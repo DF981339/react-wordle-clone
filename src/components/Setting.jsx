@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSetting } from "../context/HeaderFunctionProvider";
+import { useTheme } from "../context/ThemeProvider";
 import { targetWord } from "../context/reducer";
+import Switch from "./Switch";
 
 const year = new Date().getFullYear();
 
 const Setting = () => {
   const [showSetting, setShowSetting] = useSetting();
+  const [darkTheme, setDarkTheme] = useTheme();
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);
 
@@ -19,6 +22,7 @@ const Setting = () => {
     <SettingContainer
       animation={slideAnimation}
       onAnimationEnd={slideOutNow ? setShowSetting : null}
+      darkTheme={darkTheme}
     >
       <header>
         <div className="title">SETTINGS</div>
@@ -39,10 +43,19 @@ const Setting = () => {
       </header>
 
       <div className="setting">
-        {/* TODO: add light theme and hard mode */}
-        <div className="text">
-          Settings coming soon...
-          <p className="description">(Hard Mode, Toggle Theme...)</p>
+        <div className="setting-item">
+          <div className="text">
+            Hard Mode
+            <div className="description">
+              Any revealed hints must be used in subsequent guesses
+            </div>
+          </div>
+          <div className="coming-soon">coming soon...</div>
+        </div>
+
+        <div className="setting-item">
+          <div className="label">Dark Theme</div>
+          <Switch />
         </div>
 
         <div className="setting-item">
@@ -79,8 +92,12 @@ export default Setting;
 
 const SettingContainer = styled.section`
   position: absolute;
-  color: var(--dark-mode-header-text);
-  background-color: var(--dark-mode-bg);
+  color: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-header-text)"
+      : "var(--light-mode-header-text)"};
+  background-color: ${(props) =>
+    props.darkTheme ? "var(--dark-mode-bg)" : "var(--light-mode-bg)"};
   z-index: 2;
   height: 100%;
   width: 100%;
@@ -100,14 +117,20 @@ const SettingContainer = styled.section`
     }
 
     .close {
-      fill: var(--dark-mode-header-icon);
+      fill: ${(props) =>
+        props.darkTheme
+          ? "var(--dark-mode-header-icon)"
+          : "var(--light-mode-header-icon)"};
       position: absolute;
       right: 0;
       user-select: none;
       cursor: pointer;
 
       &:hover {
-        fill: var(--dark-mode-header-text);
+        fill: ${(props) =>
+          props.darkTheme
+            ? "var(--dark-mode-header-text)"
+            : "var(--light-mode-header-text)"};
       }
     }
   }
@@ -116,18 +139,14 @@ const SettingContainer = styled.section`
     display: flex;
     justify-content: space-between;
     font-size: clamp(12px, 3vmin, 14px);
-    color: var(--dark-mode-footer-text);
+    color: ${(props) =>
+      props.darkTheme
+        ? "var(--dark-mode-footer-text)"
+        : "var(--light-mode-footer-text)"};
   }
 
   .text {
-    text-align: center;
     font-size: clamp(18px, 3vmin, 20px);
-    border-bottom: 1px solid var(--dark-mode-header-border);
-    padding: 50px 0;
-
-    @media (max-width: 480px) {
-      margin: 0 -16px;
-    }
 
     .description {
       font-size: 13px;
@@ -135,12 +154,21 @@ const SettingContainer = styled.section`
     }
   }
 
+  .coming-soon {
+    font-size: 13px;
+    color: hsl(200, 1%, 51%);
+  }
+
   .setting {
     flex-grow: 1;
 
     .setting-item {
       font-size: clamp(15px, 3vmin, 16px);
-      border-bottom: 1px solid var(--dark-mode-header-border);
+      border-bottom: 1px solid
+        ${(props) =>
+          props.darkTheme
+            ? "var(--dark-mode-header-border)"
+            : "var(--light-mode-header-border)"};
       padding: 16px 4px;
       display: flex;
       justify-content: space-between;
@@ -156,7 +184,10 @@ const SettingContainer = styled.section`
       }
 
       a {
-        color: var(--dark-mode-footer-text);
+        color: ${(props) =>
+          props.darkTheme
+            ? "var(--dark-mode-footer-text)"
+            : "var(--light-mode-footer-text)"};
       }
     }
   }

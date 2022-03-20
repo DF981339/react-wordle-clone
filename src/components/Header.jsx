@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { useHelp, useSetting } from "../context/HeaderFunctionProvider";
+import { useTheme } from "../context/ThemeProvider";
 
 const Header = () => {
   const [showHelp, setShowHelp] = useHelp();
   const [showSetting, setShowSetting] = useSetting();
+  const [darkTheme, setDarkTheme] = useTheme();
 
   return (
-    <HeaderContainer>
+    <HeaderContainer darkTheme={darkTheme}>
       <div className="side-icon-left">
         {/* help icon */}
         <svg
@@ -76,9 +78,19 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
-  color: var(--dark-mode-header-text);
-  fill: var(--dark-mode-header-icon);
-  border-bottom: 1px solid var(--dark-mode-header-border);
+  color: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-header-text)"
+      : "var(--light-mode-header-text)"};
+  fill: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-header-icon)"
+      : "var(--light-mode-header-icon)"};
+  border-bottom: 1px solid
+    ${(props) =>
+      props.darkTheme
+        ? "var(--dark-mode-header-border)"
+        : "var(--light-mode-header-border)"};
 
   .side-icon-left {
     display: flex;
@@ -118,6 +130,10 @@ const HeaderContainer = styled.header`
 
     &:hover {
       fill: var(--dark-mode-header-text);
+      fill: ${(props) =>
+        props.darkTheme
+          ? "var(--dark-mode-header-text)"
+          : "var(--light-mode-header-text)"};
     }
   }
 `;

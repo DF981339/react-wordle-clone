@@ -3,9 +3,11 @@ import styled from "styled-components";
 import instructionData from "../assets/ui/instructionData.json";
 import Tile from "./Tile";
 import { useHelp } from "../context/HeaderFunctionProvider";
+import { useTheme } from "../context/ThemeProvider";
 
 const HowToPlay = () => {
   const [showHelp, setShowHelp] = useHelp();
+  const [darkTheme, setDarkTheme] = useTheme();
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);
 
@@ -18,6 +20,7 @@ const HowToPlay = () => {
     <HelpContainer
       animation={slideAnimation}
       onAnimationEnd={slideOutNow ? setShowHelp : null}
+      darkTheme={darkTheme}
     >
       <header>
         <div className="title">HOW TO PLAY</div>
@@ -119,8 +122,12 @@ export default HowToPlay;
 
 const HelpContainer = styled.section`
   position: absolute;
-  color: var(--dark-mode-header-text);
-  background-color: var(--dark-mode-bg);
+  color: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-header-text)"
+      : "var(--light-mode-header-text)"};
+  background-color: ${(props) =>
+    props.darkTheme ? "var(--dark-mode-bg)" : "var(--light-mode-bg)"};
   z-index: 2;
   height: 100%;
   width: 100%;
@@ -140,14 +147,20 @@ const HelpContainer = styled.section`
     }
 
     .close {
-      fill: var(--dark-mode-header-icon);
+      fill: ${(props) =>
+        props.darkTheme
+          ? "var(--dark-mode-header-icon)"
+          : "var(--light-mode-header-icon)"};
       position: absolute;
       right: 0;
       user-select: none;
       cursor: pointer;
 
       &:hover {
-        fill: var(--dark-mode-header-text);
+        fill: ${(props) =>
+          props.darkTheme
+            ? "var(--dark-mode-header-text)"
+            : "var(--light-mode-header-text)"};
       }
     }
   }
@@ -157,8 +170,16 @@ const HelpContainer = styled.section`
   }
 
   .examples {
-    border-top: 1px solid var(--dark-mode-header-border);
-    border-bottom: 1px solid var(--dark-mode-header-border);
+    border-top: 1px solid
+      ${(props) =>
+        props.darkTheme
+          ? "var(--dark-mode-header-border)"
+          : "var(--light-mode-header-border)"};
+    border-bottom: 1px solid
+      ${(props) =>
+        props.darkTheme
+          ? "var(--dark-mode-header-border)"
+          : "var(--light-mode-header-border)"};
 
     .example-grid {
       display: grid;

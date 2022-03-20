@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { ADD_LETTER, DELETE_LETTER, GUESS_WORD } from "../context/reducer";
 import { useWord } from "../context/WordProvider";
+import { useTheme } from "../context/ThemeProvider";
 
 const Key = ({ value, status }) => {
   const [state, dispatch] = useWord();
+  const [darkTheme, setDarkTheme] = useTheme();
 
   const handleDelete = () => {
     dispatch({ type: DELETE_LETTER });
@@ -29,6 +31,7 @@ const Key = ({ value, status }) => {
       <LargeKey
         value={value}
         onClick={state.disableInteraction ? null : handleDelete}
+        darkTheme={darkTheme}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,6 +52,7 @@ const Key = ({ value, status }) => {
       <LargeKey
         value={value}
         onClick={state.disableInteraction ? null : handleEnter}
+        darkTheme={darkTheme}
       >
         {value}
       </LargeKey>
@@ -58,6 +62,7 @@ const Key = ({ value, status }) => {
       value={value}
       status={status}
       onClick={state.disableInteraction ? null : handleAddKey}
+      darkTheme={darkTheme}
     >
       {value}
     </LetterKey>
@@ -75,9 +80,16 @@ const LetterKey = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--dark-mode-key-bg);
-  color: white;
-  fill: white;
+  background-color: ${(props) =>
+    props.darkTheme ? "var(--dark-mode-key-bg)" : "var(--light-mode-key-bg)"};
+  color: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-key-text-before)"
+      : "var(--light-mode-key-text-before)"};
+  fill: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-key-text-before)"
+      : "var(--light-mode-key-text-before)"};
   text-transform: uppercase;
   border-radius: 5px;
   cursor: pointer;
@@ -86,38 +98,81 @@ const LetterKey = styled.button`
 
   &:hover,
   &:focus {
-    background-color: hsl(200, 1%, 61%);
+    background-color: ${(props) =>
+      props.darkTheme ? "hsl(200, 1%, 61%)" : "hsl(214, 9%, 74%)"};
 
     ${(props) => {
       if (props.status === "wrong") {
-        return `
+        if (props.darkTheme) {
+          return `
           background-color: hsl(240, 2%, 33%);
         `;
+        } else {
+          return `
+          background-color: hsl(200, 2%, 38%);
+        `;
+        }
       } else if (props.status === "wrong-location") {
-        return `
+        if (props.darkTheme) {
+          return `
           background-color: hsl(49, 51%, 57%);
         `;
+        } else {
+          return `
+          background-color: hsl(49, 51%, 47%);
+        `;
+        }
       } else if (props.status === "correct") {
-        return `
+        if (props.darkTheme) {
+          return `
           background-color: hsl(115, 29%, 53%);
         `;
+        } else {
+          return `
+          background-color: hsl(115, 29%, 43%);
+        `;
+        }
       }
     }}
   }
 
   ${(props) => {
     if (props.status === "wrong") {
-      return `
+      if (props.darkTheme) {
+        return `
+          color: var(--dark-mode-key-text-after);
           background-color: var(--dark-mode-wrong);
         `;
+      } else {
+        return `
+          color: var(--light-mode-key-text-after);
+          background-color: var(--light-mode-wrong);
+        `;
+      }
     } else if (props.status === "wrong-location") {
-      return `
+      if (props.darkTheme) {
+        return `
+          color: var(--dark-mode-key-text-after);
           background-color: var(--dark-mode-wrong-location);
         `;
+      } else {
+        return `
+          color: var(--light-mode-key-text-after);
+          background-color: var(--light-mode-wrong-location);
+        `;
+      }
     } else if (props.status === "correct") {
-      return `
+      if (props.darkTheme) {
+        return `
+          color: var(--dark-mode-key-text-after);
           background-color: var(--dark-mode-correct);
         `;
+      } else {
+        return `
+          color: var(--light-mode-key-text-after);
+          background-color: var(--light-mode-correct);
+        `;
+      }
     }
   }}
 `;

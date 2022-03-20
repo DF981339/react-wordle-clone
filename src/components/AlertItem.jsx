@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { REMOVE_ALERT } from "../context/reducer";
 import { useWord } from "../context/WordProvider";
+import { useTheme } from "../context/ThemeProvider";
 
 const AlertItem = ({ message }) => {
   const [state, dispatch] = useWord();
+  const [darkTheme, setDarkTheme] = useTheme();
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const AlertItem = ({ message }) => {
         state.win === "lost" ? null : () => dispatch({ type: REMOVE_ALERT })
       }
       style={{ opacity: opacity }}
+      darkTheme={darkTheme}
     >
       {message}
     </AlertItemContainer>
@@ -36,7 +39,14 @@ export default AlertItem;
 
 const AlertItemContainer = styled.div`
   pointer-events: none;
-  background-color: var(--dark-mode-alert-bg);
+  background-color: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-alert-bg)"
+      : "var(--light-mode-alert-bg)"};
+  color: ${(props) =>
+    props.darkTheme
+      ? "var(--dark-mode-alert-text)"
+      : "var(--light-mode-alert-text)"};
   padding: 16px;
   font-weight: bold;
   border-radius: 4px;
