@@ -6,10 +6,14 @@ const HelpUpdateContext = createContext();
 const SettingContext = createContext();
 const SettingUpdateContext = createContext();
 
+const StatsContext = createContext();
+const StatsUpdateContext = createContext();
+
 // provider
 export const HeaderFunctionProvider = ({ children }) => {
   const [showHelp, setShowHelp] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
+  const [showStats, setShowStats] = useState(false);
 
   const toggleHelp = () => {
     setShowHelp((prevShowHelp) => !prevShowHelp);
@@ -19,12 +23,20 @@ export const HeaderFunctionProvider = ({ children }) => {
     setShowSetting((prevShowSetting) => !prevShowSetting);
   };
 
+  const toggleStats = () => {
+    setShowStats((prevShowStats) => !prevShowStats);
+  };
+
   return (
     <HelpContext.Provider value={showHelp}>
       <HelpUpdateContext.Provider value={toggleHelp}>
         <SettingContext.Provider value={showSetting}>
           <SettingUpdateContext.Provider value={toggleSetting}>
-            {children}
+            <StatsContext.Provider value={showStats}>
+              <StatsUpdateContext.Provider value={toggleStats}>
+                {children}
+              </StatsUpdateContext.Provider>
+            </StatsContext.Provider>
           </SettingUpdateContext.Provider>
         </SettingContext.Provider>
       </HelpUpdateContext.Provider>
@@ -38,4 +50,7 @@ export const useHelp = () => {
 };
 export const useSetting = () => {
   return [useContext(SettingContext), useContext(SettingUpdateContext)];
+};
+export const useStats = () => {
+  return [useContext(StatsContext), useContext(StatsUpdateContext)];
 };

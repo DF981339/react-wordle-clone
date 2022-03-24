@@ -6,17 +6,23 @@ import Keyboard from "./components/Keyboard";
 import Guesses from "./components/Guesses";
 import Header from "./components/Header";
 import HowToPlay from "./components/HowToPlay";
-import { useHelp, useSetting } from "./context/HeaderFunctionProvider";
+import {
+  useHelp,
+  useSetting,
+  useStats,
+} from "./context/HeaderFunctionProvider";
 import Setting from "./components/Setting";
 import useWindowSize from "./utils/useWindowSize";
 import UIProps from "./assets/ui/UIProps.json";
 import { useTheme } from "./context/ThemeProvider";
+import Statistics from "./components/Statistics";
 
 const { headerHeight, keyboardHeight, gameMaxWidth } = UIProps;
 
 function App() {
   const [showHelp, setShowHelp] = useHelp();
   const [showSetting, setShowSetting] = useSetting();
+  const [showStats, setShowStats] = useStats();
   const [darkTheme, setDarkTheme] = useTheme();
   const { windowHeight } = useWindowSize();
 
@@ -26,6 +32,7 @@ function App() {
       <WordProvider inititalState={initialState} reducer={reducer}>
         {showHelp ? <HowToPlay /> : null}
         {showSetting ? <Setting /> : null}
+        {showStats ? <Statistics /> : null}
         <Header />
         <Guesses />
         <Keyboard />
@@ -65,6 +72,10 @@ const GlobalStyle = createGlobalStyle`
     --light-mode-key-bg: hsl(214, 9%, 84%);
     --light-mode-key-text-before: black;
     --light-mode-key-text-after: white;
+    --light-mode-overlay: hsla(0, 0%, 100%, 0.5);
+    --light-mode-stats-bg: white;
+    --light-mode-stats-text: black;
+    --light-mode-stats-border: hsl(210, 12%, 97%);
     
     --dark-mode-bg: hsl(240, 3%, 7%);
     --dark-mode-header-text: white;
@@ -83,6 +94,10 @@ const GlobalStyle = createGlobalStyle`
     --dark-mode-key-bg: hsl(200, 1%, 51%);
     --dark-mode-key-text-before: white;
     --dark-mode-key-text-after: white;
+    --dark-mode-overlay: hsla(240, 3%, 7%, 0.5);
+    --dark-mode-stats-bg: hsl(240, 3%, 7%);
+    --dark-mode-stats-text: white;
+    --dark-mode-stats-border: hsl(240, 2%, 10%);
     
     --switch-bg: hsl(210, 1%, 34%);
     --switch-knob: white;

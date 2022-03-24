@@ -1,11 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { useHelp, useSetting } from "../context/HeaderFunctionProvider";
+import {
+  useHelp,
+  useSetting,
+  useStats,
+} from "../context/HeaderFunctionProvider";
 import { useTheme } from "../context/ThemeProvider";
 
 const Header = () => {
   const [showHelp, setShowHelp] = useHelp();
   const [showSetting, setShowSetting] = useSetting();
+  const [showStats, setShowStats] = useStats();
   const [darkTheme, setDarkTheme] = useTheme();
 
   return (
@@ -41,6 +46,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             width="24"
             className="header-icon"
+            onClick={setShowStats}
           >
             <path
               fill="var(--color-tone-1)"
