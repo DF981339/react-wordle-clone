@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  useHelp,
-  useSetting,
-  useStats,
+  useShowHelp,
+  useShowSetting,
+  useShowStats,
 } from "../context/HeaderFunctionProvider";
 import { useTheme } from "../context/ThemeProvider";
 
 const Header = () => {
-  const [showHelp, setShowHelp] = useHelp();
-  const [showSetting, setShowSetting] = useSetting();
-  const [showStats, setShowStats] = useStats();
+  const [showHelp, setShowHelp] = useShowHelp();
+  const [showSetting, setShowSetting] = useShowSetting();
+  const [showStats, setShowStats] = useShowStats();
   const [darkTheme, setDarkTheme] = useTheme();
 
   return (

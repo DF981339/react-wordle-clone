@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import instructionData from "../assets/ui/instructionData.json";
 import Tile from "./Tile";
-import { useHelp } from "../context/HeaderFunctionProvider";
+import { useShowHelp } from "../context/HeaderFunctionProvider";
 import { useTheme } from "../context/ThemeProvider";
 
 const HowToPlay = () => {
-  const [showHelp, setShowHelp] = useHelp();
+  const [showHelp, setShowHelp] = useShowHelp();
   const [darkTheme, setDarkTheme] = useTheme();
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);

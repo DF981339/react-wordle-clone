@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useSetting } from "../context/HeaderFunctionProvider";
+import { useShowSetting } from "../context/HeaderFunctionProvider";
 import { useTheme } from "../context/ThemeProvider";
 import { targetWord } from "../context/reducer";
 import Switch from "./Switch";
@@ -8,7 +8,7 @@ import Switch from "./Switch";
 const year = new Date().getFullYear();
 
 const Setting = () => {
-  const [showSetting, setShowSetting] = useSetting();
+  const [showSetting, setShowSetting] = useShowSetting();
   const [darkTheme, setDarkTheme] = useTheme();
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);

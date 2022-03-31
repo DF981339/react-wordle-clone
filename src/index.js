@@ -4,12 +4,19 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { HeaderFunctionProvider } from "./context/HeaderFunctionProvider";
 import { ThemeProvider } from "./context/ThemeProvider";
+import { StatsProvider } from "./context/StatsProvider/StatsProvider";
+import {
+  statsInitialState,
+  statsReducer,
+} from "./context/StatsProvider/statsReducer";
 
 ReactDOM.render(
   <React.StrictMode>
     <HeaderFunctionProvider>
       <ThemeProvider>
-        <App />
+        <StatsProvider inititalState={statsInitialState} reducer={statsReducer}>
+          <App />
+        </StatsProvider>
       </ThemeProvider>
     </HeaderFunctionProvider>
   </React.StrictMode>,

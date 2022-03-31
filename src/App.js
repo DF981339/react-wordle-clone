@@ -7,9 +7,9 @@ import Guesses from "./components/Guesses";
 import Header from "./components/Header";
 import HowToPlay from "./components/HowToPlay";
 import {
-  useHelp,
-  useSetting,
-  useStats,
+  useShowHelp,
+  useShowSetting,
+  useShowStats,
 } from "./context/HeaderFunctionProvider";
 import Setting from "./components/Setting";
 import useWindowSize from "./utils/useWindowSize";
@@ -20,9 +20,9 @@ import Statistics from "./components/Statistics";
 const { headerHeight, keyboardHeight, gameMaxWidth } = UIProps;
 
 function App() {
-  const [showHelp, setShowHelp] = useHelp();
-  const [showSetting, setShowSetting] = useSetting();
-  const [showStats, setShowStats] = useStats();
+  const [showHelp, setShowHelp] = useShowHelp();
+  const [showSetting, setShowSetting] = useShowSetting();
+  const [showStats, setShowStats] = useShowStats();
   const [darkTheme, setDarkTheme] = useTheme();
   const { windowHeight } = useWindowSize();
 

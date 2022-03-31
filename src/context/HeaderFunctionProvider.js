@@ -45,12 +45,12 @@ export const HeaderFunctionProvider = ({ children }) => {
 };
 
 // custom hook for other component to use
-export const useHelp = () => {
+export const useShowHelp = () => {
   return [useContext(HelpContext), useContext(HelpUpdateContext)];
 };
-export const useSetting = () => {
+export const useShowSetting = () => {
   return [useContext(SettingContext), useContext(SettingUpdateContext)];
 };
-export const useStats = () => {
+export const useShowStats = () => {
   return [useContext(StatsContext), useContext(StatsUpdateContext)];
 };

@@ -12,11 +12,11 @@ import {
   CHECK_WIN_LOSE,
   BOUNCE_ANIMATION_DURATION,
 } from "../context/reducer";
-import { useHelp } from "../context/HeaderFunctionProvider";
+import { useShowHelp } from "../context/HeaderFunctionProvider";
 
 const Tile = ({ value, status, shake, flip, id, index, bounce, tileSize }) => {
   const [state, dispatch] = useWord();
-  const [showHelp, setShowHelp] = useHelp();
+  const [showHelp, setShowHelp] = useShowHelp();
   const [darkTheme, setDarkTheme] = useTheme();
   const [flipNow, setFlipNow] = useState(false);
   const [bounceNow, setBounceNow] = useState(false);

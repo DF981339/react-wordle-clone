@@ -37,13 +37,7 @@ const BarContainer = styled.div`
       justify-content: ${({ freq }) => (freq > 0 ? "flex-end" : "center")};
       padding-right: ${({ freq }) => (freq > 0 ? "8px" : 0)};
       background-color: ${(props) =>
-        props.freq > 0 && props.darkTheme
-          ? "var(--dark-mode-correct)"
-          : props.freq > 0 && !props.darkTheme
-          ? "var(--light-mode-correct)"
-          : props.freq === 0 && props.darkTheme
-          ? "var(--dark-mode-wrong)"
-          : "var(--light-mode-wrong)"};
+        props.darkTheme ? "var(--dark-mode-wrong)" : "var(--light-mode-wrong)"};
       height: 100%;
       display: flex;
     }

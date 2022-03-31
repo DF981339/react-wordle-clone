@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useTheme } from "../context/ThemeProvider";
-import { useStats } from "../context/HeaderFunctionProvider";
+import { useShowStats } from "../context/HeaderFunctionProvider";
 import { CloseButton } from "../shared/sharedStyledComponents";
 import Bar from "./Bar";
+import { useStats } from "../context/StatsProvider/StatsProvider";
 
 const Statistics = () => {
   const [darkTheme, setDarkTheme] = useTheme();
-  const [showStats, setShowStats] = useStats();
+  const [showStats, setShowStats] = useShowStats();
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);
+  const [state, dispatch] = useStats();
 
   const statsRef = useRef(null);
 
@@ -55,31 +57,36 @@ const Statistics = () => {
           <h1 className="title">STATISTICS</h1>
           <div className="statistics">
             <div className="statistic-container">
-              <div className="statistic">1</div>
+              <div className="statistic">{state.gamesPlayed}</div>
               <div className="label">Played</div>
             </div>
             <div className="statistic-container">
-              <div className="statistic">100</div>
+              <div className="statistic">{state.winPercentage}</div>
               <div className="label">Win %</div>
             </div>
             <div className="statistic-container">
-              <div className="statistic">1</div>
+              <div className="statistic">{state.currentStreak}</div>
               <div className="label">Current Streak</div>
             </div>
             <div className="statistic-container">
-              <div className="statistic">1</div>
+              <div className="statistic">{state.maxStreak}</div>
               <div className="label">Max Streak</div>
             </div>
           </div>
 
           <h1 className="title">GUESS DISTRIBUTION</h1>
           <div className="guess-distribution">
-            <Bar guess={1} freq={1} width={100} />
-            <Bar guess={2} freq={0} width={7} />
-            <Bar guess={3} freq={0} width={7} />
-            <Bar guess={4} freq={0} width={7} />
-            <Bar guess={5} freq={0} width={7} />
-            <Bar guess={6} freq={0} width={7} />
+            {state.guesses.map(
+              ({ guess, frequence }) =>
+                guess !== "fail" && (
+                  <Bar
+                    key={guess}
+                    guess={guess}
+                    freq={frequence}
+                    width={frequence === 0 ? 7 : 100}
+                  />
+                )
+            )}
           </div>
         </div>
       </div>
