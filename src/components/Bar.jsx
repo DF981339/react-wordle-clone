@@ -40,6 +40,7 @@ const BarContainer = styled.div`
         props.darkTheme ? "var(--dark-mode-wrong)" : "var(--light-mode-wrong)"};
       height: 100%;
       display: flex;
+      box-sizing: content-box;
     }
 
     .num-guesses {

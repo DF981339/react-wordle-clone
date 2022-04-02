@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useTheme } from "../context/ThemeProvider";
 import { useShowStats } from "../context/HeaderFunctionProvider";
-import { CloseButton } from "../shared/sharedStyledComponents";
 import Bar from "./Bar";
 import { useStats } from "../context/StatsProvider/StatsProvider";
+import Overlay from "../shared/Overlay";
+import CloseButton from "../shared/CloseButton";
+import CenterModal from "../shared/CenterModal";
 
 const Statistics = () => {
   const [darkTheme, setDarkTheme] = useTheme();
@@ -13,45 +15,19 @@ const Statistics = () => {
   const [slideOutNow, setSlideOutNow] = useState(false);
   const [state, dispatch] = useStats();
 
-  const statsRef = useRef(null);
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-
-    return () =>
-      document.removeEventListener("click", handleClickOutside, true);
-  }, []);
-
-  const handleClickOutside = (e) => {
-    if (statsRef.current && !statsRef.current.contains(e.target)) handleClose();
-  };
-
   const handleClose = () => {
     setSlideAnimation("down");
     setSlideOutNow(true);
   };
 
   return (
-    <OverLay
+    <StatsOverlay
       animation={slideAnimation}
       onAnimationEnd={slideOutNow ? setShowStats : null}
       darkTheme={darkTheme}
     >
-      <div className="stats" ref={statsRef}>
-        <ModalCloseButton className="close">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            onClick={handleClose}
-          >
-            <path
-              fill="var(--color-tone-1)"
-              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-            ></path>
-          </svg>
-        </ModalCloseButton>
+      <StatsModal darkTheme={darkTheme} handleClose={handleClose}>
+        <ModalCloseButton darkTheme={darkTheme} onClick={handleClose} />
 
         <div className="content">
           <h1 className="title">STATISTICS</h1>
@@ -83,101 +59,32 @@ const Statistics = () => {
                     key={guess}
                     guess={guess}
                     freq={frequence}
-                    width={frequence === 0 ? 7 : 100}
+                    width={
+                      frequence === 0
+                        ? 7
+                        : Math.floor((frequence / state.averageGuesses) * 100)
+                    }
                   />
                 )
             )}
           </div>
+
+          <div className="footer">
+            <h5>
+              Thank you for playing the <span className="react">React</span>{" "}
+              <span className="wordle">Wordle</span>{" "}
+              <span className="clone">Clone</span>!
+            </h5>
+            <h5>Come back tomorrow.</h5>
+          </div>
         </div>
-      </div>
-    </OverLay>
+      </StatsModal>
+    </StatsOverlay>
   );
 };
 export default Statistics;
 
-const OverLay = styled.section`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) =>
-    props.darkTheme ? "var(--dark-mode-overlay)" : "var(--light-mode-overlay)"};
-  z-index: 10;
-
-  .stats {
-    border-radius: 8px;
-    width: 90%;
-    max-height: 90%;
-    max-width: var(--game-max-width);
-    overflow-y: auto;
-    padding: 16px;
-    border: 1px solid
-      ${(props) =>
-        props.darkTheme
-          ? "var(--dark-mode-stats-border)"
-          : "var(--light-mode-stats-border)"};
-    background-color: ${(props) =>
-      props.darkTheme
-        ? "var(--dark-mode-stats-bg)"
-        : "var(--light-mode-stats-bg)"};
-    color: ${(props) =>
-      props.darkTheme
-        ? "var(--dark-mode-stats-text)"
-        : "var(--light-mode-stats-text)"};
-    position: relative;
-    box-shadow: 0 4px 23px 0 rgb(0 0 0 / 20%);
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 0;
-
-      .title {
-        font-size: 16px;
-        letter-spacing: 0.5px;
-        margin: 10px 0;
-      }
-
-      .statistics {
-        display: flex;
-        margin-bottom: 10px;
-
-        .statistic-container {
-          flex: 1;
-
-          .statistic {
-            font-size: 36px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            letter-spacing: 0.05em;
-            font-variant-numeric: proportional-nums;
-          }
-
-          .label {
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-          }
-        }
-      }
-
-      .guess-distribution {
-        padding-bottom: 10px;
-        width: 80%;
-      }
-    }
-  }
-
+const StatsOverlay = styled(Overlay)`
   ${(props) => {
     if (props.animation === "up") {
       return `
@@ -215,6 +122,67 @@ const OverLay = styled.section`
       height: calc(100% - 30px);
       transform: translateY(30px);
       opacity: 0;
+    }
+  }
+`;
+
+const StatsModal = styled(CenterModal)`
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+
+    .title {
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      margin: 10px 0;
+    }
+
+    .footer {
+      text-align: center;
+      color: ${(props) =>
+        props.darkTheme
+          ? "var(--dark-mode-footer-text)"
+          : "var(--light-mode-footer-text)"};
+
+      h5 {
+        font-size: 15px;
+        padding: 5px 0;
+      }
+    }
+
+    .statistics {
+      display: flex;
+      margin-bottom: 10px;
+
+      .statistic-container {
+        flex: 1;
+
+        .statistic {
+          font-size: 36px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          letter-spacing: 0.05em;
+          font-variant-numeric: proportional-nums;
+        }
+
+        .label {
+          font-size: 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+      }
+    }
+
+    .guess-distribution {
+      padding-bottom: 10px;
+      width: 80%;
     }
   }
 `;

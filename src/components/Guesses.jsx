@@ -1,14 +1,54 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useWord } from "../context/WordProvider";
 import Alerts from "./Alerts";
 import Tile from "./Tile";
 import useBoardSize from "../utils/useBoardSize";
+import { useStats } from "../context/StatsProvider/StatsProvider";
+import {
+  UPDATE_WIN_LOSE,
+  UPDATE_WIN_PERCENTAGE,
+  UPDATE_STREAK,
+  UPDATE_DISTRIBUTION,
+  UPDATE_AVERAGE_GUESSES,
+} from "../context/StatsProvider/statsReducer";
+import { useShowStats } from "../context/HeaderFunctionProvider";
 
 const Guesses = () => {
   const [state, dispatch] = useWord();
   const boardContainerRef = useRef(null);
   const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
+  const [statsState, statsDispatch] = useStats();
+  const [showStats, setShowStats] = useShowStats();
+
+  useEffect(() => {
+    let statsTimer;
+    if (state.win !== "in progress") {
+      statsDispatch({
+        type: UPDATE_WIN_LOSE,
+        payload: { winOrLose: state.win },
+      });
+      statsDispatch({
+        type: UPDATE_WIN_PERCENTAGE,
+      });
+      statsDispatch({
+        type: UPDATE_STREAK,
+        payload: { winOrLose: state.win },
+      });
+      statsDispatch({
+        type: UPDATE_DISTRIBUTION,
+        payload: { winRow: state.winRow },
+      });
+      statsDispatch({
+        type: UPDATE_AVERAGE_GUESSES,
+      });
+      statsTimer = setTimeout(() => {
+        setShowStats();
+      }, 1000);
+    }
+
+    return () => clearTimeout(statsTimer);
+  }, [state.win]);
 
   return (
     <GuessContainer ref={boardContainerRef}>

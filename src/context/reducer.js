@@ -367,6 +367,7 @@ const reducer = (state, action) => {
             tiles: bounceTiles(state.tiles, currentRow),
             alerts: [addAlert(winTriesMsg(currentRowIndex))],
             win: "won",
+            winRow: currentRowIndex,
             disableInteraction: true,
           };
         }
