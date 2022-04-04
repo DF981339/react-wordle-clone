@@ -9,14 +9,20 @@ import {
   statsInitialState,
   statsReducer,
 } from "./context/StatsProvider/statsReducer";
+import { IntroProvider } from "./context/IntroProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <HeaderFunctionProvider>
       <ThemeProvider>
-        <StatsProvider inititalState={statsInitialState} reducer={statsReducer}>
-          <App />
-        </StatsProvider>
+        <IntroProvider>
+          <StatsProvider
+            inititalState={statsInitialState}
+            reducer={statsReducer}
+          >
+            <App />
+          </StatsProvider>
+        </IntroProvider>
       </ThemeProvider>
     </HeaderFunctionProvider>
   </React.StrictMode>,

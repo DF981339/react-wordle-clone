@@ -16,6 +16,8 @@ import useWindowSize from "./utils/useWindowSize";
 import UIProps from "./assets/ui/UIProps.json";
 import { useTheme } from "./context/ThemeProvider";
 import Statistics from "./components/Statistics";
+import { useShowIntro } from "./context/IntroProvider";
+import Intro from "./components/Intro";
 
 const { headerHeight, keyboardHeight, gameMaxWidth } = UIProps;
 
@@ -24,6 +26,7 @@ function App() {
   const [showSetting, setShowSetting] = useShowSetting();
   const [showStats, setShowStats] = useShowStats();
   const [darkTheme, setDarkTheme] = useTheme();
+  const [showIntro, setShowIntro] = useShowIntro();
   const { windowHeight } = useWindowSize();
 
   return (
@@ -33,6 +36,7 @@ function App() {
         {showHelp ? <HowToPlay /> : null}
         {showSetting ? <Setting /> : null}
         {showStats ? <Statistics /> : null}
+        {showIntro ? <Intro /> : null}
         <Header />
         <Guesses />
         <Keyboard />
