@@ -1,4 +1,4 @@
-import { WordProvider } from "./context/WordProvider";
+import { GameProvider } from "./context/GameProvider";
 import reducer from "./context/reducer";
 import { initialState } from "./context/initialState";
 import styled, { createGlobalStyle } from "styled-components";
@@ -32,7 +32,7 @@ function App() {
   return (
     <Container style={{ height: windowHeight }}>
       <GlobalStyle darkTheme={darkTheme} />
-      <WordProvider inititalState={initialState} reducer={reducer}>
+      <GameProvider inititalState={initialState} reducer={reducer}>
         {showHelp ? <HowToPlay /> : null}
         {showSetting ? <Setting /> : null}
         {showStats ? <Statistics /> : null}
@@ -40,7 +40,7 @@ function App() {
         <Header />
         <Guesses />
         <Keyboard />
-      </WordProvider>
+      </GameProvider>
     </Container>
   );
 }

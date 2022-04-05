@@ -1,5 +1,6 @@
 import { initialState } from "./initialState";
 import { v4 as uuidv4 } from "uuid";
+import { dayjs } from "dayjs";
 import dictionary from "../assets/data/dictionary.json";
 import targetWords from "../assets/data/targetWords.json";
 import winMessages from "../assets/data/winMessages.json";
@@ -13,15 +14,16 @@ export const FLIP_TILE_RESET = "FLIP_TILE_RESET";
 export const UPDATE_TILE_STATUS = "UPDATE_TILE_STATUS";
 export const UPDATE_KEY_STATUS = "UPDATE_KEY_STATUS";
 export const CHECK_WIN_LOSE = "CHECK_WIN_LOSE";
+export const CLEAR_BOARD = "CLEAR_BOARD";
 
 export const FLIP_ANIMATION_DURATION = 500;
 export const BOUNCE_ANIMATION_DURATION = 500;
 export const WORD_LENGTH = 5;
 
-const offsetFromDate = new Date(2022, 0, 1);
-const msOffset = Date.now() - offsetFromDate;
-const dayOffset = msOffset / 1000 / 60 / 60 / 24;
-export const targetWord = targetWords[Math.floor(dayOffset)];
+const startDate = dayjs("2022-01-01");
+const today = dayjs();
+const dayOffset = today.diff(startDate, "day");
+export const targetWord = targetWords[dayOffset];
 
 const getActiveTiles = (tilesArray) => {
   return tilesArray.filter((tile) => tile.status === "active");
@@ -394,6 +396,9 @@ const reducer = (state, action) => {
 
       return state;
     }
+
+    case CLEAR_BOARD:
+      return initialState;
 
     default:
       return state;

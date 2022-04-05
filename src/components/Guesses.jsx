@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
-import { useWord } from "../context/WordProvider";
+import { useGame } from "../context/GameProvider";
 import Alerts from "./Alerts";
 import Tile from "./Tile";
 import useBoardSize from "../utils/useBoardSize";
@@ -15,7 +15,7 @@ import {
 import { useShowStats } from "../context/HeaderFunctionProvider";
 
 const Guesses = () => {
-  const [state, dispatch] = useWord();
+  const [state, dispatch] = useGame();
   const boardContainerRef = useRef(null);
   const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
   const [statsState, statsDispatch] = useStats();
@@ -43,7 +43,7 @@ const Guesses = () => {
         type: UPDATE_AVERAGE_GUESSES,
       });
       statsTimer = setTimeout(() => {
-        setShowStats();
+        setShowStats(true);
       }, 1000);
     }
 

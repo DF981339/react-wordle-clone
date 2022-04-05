@@ -23,7 +23,7 @@ const Statistics = () => {
   return (
     <StatsOverlay
       animation={slideAnimation}
-      onAnimationEnd={slideOutNow ? setShowStats : null}
+      onAnimationEnd={slideOutNow ? () => setShowStats() : null}
       darkTheme={darkTheme}
     >
       <StatsModal darkTheme={darkTheme} handleClose={handleClose}>

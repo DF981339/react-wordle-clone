@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useWord } from "../context/WordProvider";
+import { useGame } from "../context/GameProvider";
 import { useTheme } from "../context/ThemeProvider";
 import {
   SHAKE_TILE_RESET,
@@ -16,7 +16,7 @@ import { useShowHelp } from "../context/HeaderFunctionProvider";
 import { useShowIntro } from "../context/IntroProvider";
 
 const Tile = ({ value, status, shake, flip, id, index, bounce, tileSize }) => {
-  const [state, dispatch] = useWord();
+  const [state, dispatch] = useGame();
   const [showHelp, setShowHelp] = useShowHelp();
   const [showIntro, setShowIntro] = useShowIntro();
   const [darkTheme, setDarkTheme] = useTheme();

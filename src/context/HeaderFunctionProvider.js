@@ -23,8 +23,10 @@ export const HeaderFunctionProvider = ({ children }) => {
     setShowSetting((prevShowSetting) => !prevShowSetting);
   };
 
-  const toggleStats = () => {
-    setShowStats((prevShowStats) => !prevShowStats);
+  const toggleStats = (bool) => {
+    bool !== undefined
+      ? setShowStats(bool)
+      : setShowStats((prevShowStats) => !prevShowStats);
   };
 
   return (

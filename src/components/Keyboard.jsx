@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useWord } from "../context/WordProvider";
+import { useGame } from "../context/GameProvider";
 import Key from "./Key";
 import { ADD_LETTER, DELETE_LETTER, GUESS_WORD } from "../context/reducer";
 
 const Keyboard = () => {
-  const [state, dispatch] = useWord();
+  const [state, dispatch] = useGame();
 
   useEffect(() => {
     if (state.disableInteraction) {

@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { ADD_LETTER, DELETE_LETTER, GUESS_WORD } from "../context/reducer";
-import { useWord } from "../context/WordProvider";
+import { useGame } from "../context/GameProvider";
 import { useTheme } from "../context/ThemeProvider";
 
 const Key = ({ value, status }) => {
-  const [state, dispatch] = useWord();
+  const [state, dispatch] = useGame();
   const [darkTheme, setDarkTheme] = useTheme();
 
   const handleDelete = () => {
