@@ -9,6 +9,7 @@ import CloseButton from "../shared/CloseButton";
 import CenterModal from "../shared/CenterModal";
 import useCountdown from "../utils/useCountdown";
 import { statsInitialState } from "../context/StatsProvider/statsReducer";
+import { useGame } from "../context/GameProvider";
 
 const Statistics = () => {
   const [darkTheme, setDarkTheme] = useTheme();
@@ -17,6 +18,7 @@ const Statistics = () => {
   const [slideOutNow, setSlideOutNow] = useState(false);
   const [state, dispatch] = useStats();
   const countDownTime = useCountdown();
+  const [gameState, gameDispatch] = useGame();
 
   const handleClose = () => {
     setSlideAnimation("down");
@@ -78,17 +80,15 @@ const Statistics = () => {
                 )}
               </div>
 
-              <div className="footer">
-                <div className="timer">
-                  <h4>NEXT WORDLE</h4>
-                  <h3>{countDownTime}</h3>
+              {gameState.win !== "in progress" ? (
+                <div className="footer">
+                  <div className="timer">
+                    <h4>NEXT WORDLE</h4>
+                    <h3>{countDownTime}</h3>
+                  </div>
+                  <h5>Thank you for playing the React Wordle Clone!</h5>
                 </div>
-                <h5>
-                  Thank you for playing the <span className="react">React</span>{" "}
-                  <span className="wordle">Wordle</span>{" "}
-                  <span className="clone">Clone</span>!
-                </h5>
-              </div>
+              ) : null}
             </>
           )}
         </div>
