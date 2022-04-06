@@ -1,6 +1,6 @@
 import { initialState } from "./initialState";
 import { v4 as uuidv4 } from "uuid";
-import { dayjs } from "dayjs";
+import dayjs from "dayjs";
 import dictionary from "../assets/data/dictionary.json";
 import targetWords from "../assets/data/targetWords.json";
 import winMessages from "../assets/data/winMessages.json";

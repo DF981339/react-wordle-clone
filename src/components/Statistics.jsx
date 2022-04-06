@@ -7,6 +7,7 @@ import { useStats } from "../context/StatsProvider/StatsProvider";
 import Overlay from "../shared/Overlay";
 import CloseButton from "../shared/CloseButton";
 import CenterModal from "../shared/CenterModal";
+import useCountdown from "../utils/useCountdown";
 
 const Statistics = () => {
   const [darkTheme, setDarkTheme] = useTheme();
@@ -14,6 +15,7 @@ const Statistics = () => {
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);
   const [state, dispatch] = useStats();
+  const countDownTime = useCountdown();
 
   const handleClose = () => {
     setSlideAnimation("down");
@@ -70,12 +72,15 @@ const Statistics = () => {
           </div>
 
           <div className="footer">
+            <div className="timer">
+              <h4>NEXT WORDLE</h4>
+              <h3>{countDownTime}</h3>
+            </div>
             <h5>
               Thank you for playing the <span className="react">React</span>{" "}
               <span className="wordle">Wordle</span>{" "}
               <span className="clone">Clone</span>!
             </h5>
-            <h5>Come back tomorrow.</h5>
           </div>
         </div>
       </StatsModal>
@@ -150,6 +155,19 @@ const StatsModal = styled(CenterModal)`
       h5 {
         font-size: 15px;
         padding: 5px 0;
+      }
+
+      .timer {
+        color: ${(props) =>
+          props.darkTheme
+            ? "var(--dark-mode-stats-text)"
+            : "var(--light-mode-stats-text)"};
+
+        h3 {
+          font-size: clamp(36px, 5vmin, 40px);
+          font-weight: 400;
+          padding: 10px 0;
+        }
       }
     }
 
