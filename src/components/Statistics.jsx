@@ -8,6 +8,7 @@ import Overlay from "../shared/Overlay";
 import CloseButton from "../shared/CloseButton";
 import CenterModal from "../shared/CenterModal";
 import useCountdown from "../utils/useCountdown";
+import { statsInitialState } from "../context/StatsProvider/statsReducer";
 
 const Statistics = () => {
   const [darkTheme, setDarkTheme] = useTheme();
@@ -53,35 +54,43 @@ const Statistics = () => {
           </div>
 
           <h1 className="title">GUESS DISTRIBUTION</h1>
-          <div className="guess-distribution">
-            {state.guesses.map(
-              ({ guess, frequence }) =>
-                guess !== "fail" && (
-                  <Bar
-                    key={guess}
-                    guess={guess}
-                    freq={frequence}
-                    width={
-                      frequence === 0
-                        ? 7
-                        : Math.floor((frequence / state.averageGuesses) * 100)
-                    }
-                  />
-                )
-            )}
-          </div>
+          {state === statsInitialState ? (
+            <div className="no-data">No Data</div>
+          ) : (
+            <>
+              <div className="guess-distribution">
+                {state.guesses.map(
+                  ({ guess, frequence }) =>
+                    guess !== "fail" && (
+                      <Bar
+                        key={guess}
+                        guess={guess}
+                        freq={frequence}
+                        width={
+                          frequence === 0
+                            ? 7
+                            : Math.floor(
+                                (frequence / state.averageGuesses) * 100
+                              )
+                        }
+                      />
+                    )
+                )}
+              </div>
 
-          <div className="footer">
-            <div className="timer">
-              <h4>NEXT WORDLE</h4>
-              <h3>{countDownTime}</h3>
-            </div>
-            <h5>
-              Thank you for playing the <span className="react">React</span>{" "}
-              <span className="wordle">Wordle</span>{" "}
-              <span className="clone">Clone</span>!
-            </h5>
-          </div>
+              <div className="footer">
+                <div className="timer">
+                  <h4>NEXT WORDLE</h4>
+                  <h3>{countDownTime}</h3>
+                </div>
+                <h5>
+                  Thank you for playing the <span className="react">React</span>{" "}
+                  <span className="wordle">Wordle</span>{" "}
+                  <span className="clone">Clone</span>!
+                </h5>
+              </div>
+            </>
+          )}
         </div>
       </StatsModal>
     </StatsOverlay>
@@ -201,6 +210,10 @@ const StatsModal = styled(CenterModal)`
     .guess-distribution {
       padding-bottom: 10px;
       width: 80%;
+    }
+
+    .no-data {
+      text-align: center;
     }
   }
 `;
