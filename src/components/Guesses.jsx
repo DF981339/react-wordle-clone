@@ -35,7 +35,7 @@ const Guesses = () => {
 
   useEffect(() => {
     let statsTimer;
-    if (state.win !== "in progress") {
+    if (!state.todayPlayed && state.win !== "in progress") {
       statsDispatch({
         type: UPDATE_WIN_LOSE,
         payload: { winOrLose: state.win },
@@ -54,6 +54,12 @@ const Guesses = () => {
       statsDispatch({
         type: UPDATE_AVERAGE_GUESSES,
       });
+      statsTimer = setTimeout(() => {
+        setShowStats(true);
+      }, 1000);
+    }
+
+    if (state.todayPlayed) {
       statsTimer = setTimeout(() => {
         setShowStats(true);
       }, 1000);

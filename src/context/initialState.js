@@ -277,4 +277,5 @@ export const initialState = {
   alerts: [],
   win: "in progress",
   currentGuess: "",
+  todayPlayed: false,
 };

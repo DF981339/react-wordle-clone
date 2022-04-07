@@ -371,6 +371,7 @@ const reducer = (state, action) => {
             win: "won",
             winRow: currentRowIndex,
             disableInteraction: true,
+            todayPlayed: true,
           };
         }
 
@@ -384,6 +385,7 @@ const reducer = (state, action) => {
             alerts: [addAlert(targetWord.toUpperCase())],
             win: "lost",
             disableInteraction: true,
+            todayPlayed: true,
           };
         }
 
