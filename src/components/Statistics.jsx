@@ -176,6 +176,7 @@ const StatsModal = styled(CenterModal)`
           font-size: clamp(36px, 5vmin, 40px);
           font-weight: 400;
           padding: 10px 0;
+          letter-spacing: 0.05em;
         }
       }
     }

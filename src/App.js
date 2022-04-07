@@ -50,7 +50,7 @@ export default App;
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
-    font-family: Arial;
+    font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
   }
 
