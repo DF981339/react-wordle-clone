@@ -14,6 +14,7 @@ export const FLIP_TILE_RESET = "FLIP_TILE_RESET";
 export const UPDATE_TILE_STATUS = "UPDATE_TILE_STATUS";
 export const UPDATE_KEY_STATUS = "UPDATE_KEY_STATUS";
 export const CHECK_WIN_LOSE = "CHECK_WIN_LOSE";
+export const UPDATE_PLAYED = "UPDATE_PLAYED";
 export const CLEAR_BOARD = "CLEAR_BOARD";
 
 export const FLIP_ANIMATION_DURATION = 500;
@@ -371,7 +372,6 @@ const reducer = (state, action) => {
             win: "won",
             winRow: currentRowIndex,
             disableInteraction: true,
-            todayPlayed: true,
           };
         }
 
@@ -385,7 +385,6 @@ const reducer = (state, action) => {
             alerts: [addAlert(targetWord.toUpperCase())],
             win: "lost",
             disableInteraction: true,
-            todayPlayed: true,
           };
         }
 
@@ -398,6 +397,12 @@ const reducer = (state, action) => {
 
       return state;
     }
+
+    case UPDATE_PLAYED:
+      return {
+        ...state,
+        todayPlayed: true,
+      };
 
     case CLEAR_BOARD:
       return initialState;

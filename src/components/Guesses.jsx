@@ -13,7 +13,7 @@ import {
   UPDATE_AVERAGE_GUESSES,
 } from "../context/StatsProvider/statsReducer";
 import { useShowStats } from "../context/HeaderFunctionProvider";
-import { targetWord, CLEAR_BOARD } from "../context/reducer";
+import { targetWord, CLEAR_BOARD, UPDATE_PLAYED } from "../context/reducer";
 
 const Guesses = () => {
   const [state, dispatch] = useGame();
@@ -57,6 +57,9 @@ const Guesses = () => {
       statsTimer = setTimeout(() => {
         setShowStats(true);
       }, 1000);
+      dispatch({
+        type: UPDATE_PLAYED,
+      });
     }
 
     if (state.todayPlayed) {
