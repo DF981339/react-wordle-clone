@@ -1,12 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useReducer,
-  useEffect,
-  useRef,
-} from "react";
-import { targetWord, CLEAR_BOARD } from "./reducer";
-import { useShowStats } from "./HeaderFunctionProvider";
+import React, { createContext, useContext, useReducer, useEffect } from "react";
 
 const GameContext = createContext();
 
@@ -20,18 +12,6 @@ export const GameProvider = ({ reducer, inititalState, children }) => {
   useEffect(() => {
     localStorage.setItem("gameStates", JSON.stringify(gameState));
   }, [gameState]);
-
-  const firstUpdate = useRef(true);
-  const [showStats, setShowStats] = useShowStats();
-
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-    } else {
-      setGameState({ type: CLEAR_BOARD });
-      setShowStats(false);
-    }
-  }, [targetWord]);
 
   return (
     <GameContext.Provider value={[gameState, setGameState]}>

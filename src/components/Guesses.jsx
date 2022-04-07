@@ -13,6 +13,7 @@ import {
   UPDATE_AVERAGE_GUESSES,
 } from "../context/StatsProvider/statsReducer";
 import { useShowStats } from "../context/HeaderFunctionProvider";
+import { targetWord, CLEAR_BOARD } from "../context/reducer";
 
 const Guesses = () => {
   const [state, dispatch] = useGame();
@@ -20,6 +21,17 @@ const Guesses = () => {
   const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
   const [statsState, statsDispatch] = useStats();
   const [showStats, setShowStats] = useShowStats();
+
+  const firstUpdate = useRef(true);
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+    } else {
+      dispatch({ type: CLEAR_BOARD });
+      setShowStats(false);
+    }
+  }, [targetWord]);
 
   useEffect(() => {
     let statsTimer;
