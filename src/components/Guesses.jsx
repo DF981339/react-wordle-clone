@@ -10,7 +10,7 @@ import {
   UPDATE_WIN_PERCENTAGE,
   UPDATE_STREAK,
   UPDATE_DISTRIBUTION,
-  UPDATE_AVERAGE_GUESSES,
+  UPDATE_MOST_GUESSES,
 } from "../context/StatsProvider/statsReducer";
 import { useShowStats } from "../context/HeaderFunctionProvider";
 import { targetWord, CLEAR_BOARD, UPDATE_PLAYED } from "../context/reducer";
@@ -52,7 +52,7 @@ const Guesses = () => {
         payload: { winRow: state.winRow },
       });
       statsDispatch({
-        type: UPDATE_AVERAGE_GUESSES,
+        type: UPDATE_MOST_GUESSES,
       });
       statsTimer = setTimeout(() => {
         setShowStats(true);

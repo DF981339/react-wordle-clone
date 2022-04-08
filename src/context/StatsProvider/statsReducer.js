@@ -2,7 +2,7 @@ export const UPDATE_WIN_LOSE = "UPDATE_WIN_LOSE";
 export const UPDATE_WIN_PERCENTAGE = "UPDATE_WIN_PERCENTAGE";
 export const UPDATE_STREAK = "UPDATE_STREAK";
 export const UPDATE_DISTRIBUTION = "UPDATE_DISTRIBUTION";
-export const UPDATE_AVERAGE_GUESSES = "UPDATE_AVERAGE_GUESSES";
+export const UPDATE_MOST_GUESSES = "UPDATE_MOST_GUESSES";
 
 export const statsInitialState = {
   currentStreak: 0,
@@ -40,7 +40,7 @@ export const statsInitialState = {
   winPercentage: 0,
   gamesPlayed: 0,
   gamesWon: 0,
-  averageGuesses: 0,
+  mostGuesses: 0,
 };
 
 export const statsReducer = (state, action) => {
@@ -90,10 +90,10 @@ export const statsReducer = (state, action) => {
         guesses: newGuesses,
       };
 
-    case UPDATE_AVERAGE_GUESSES:
+    case UPDATE_MOST_GUESSES:
       return {
         ...state,
-        averageGuesses: state.guesses.reduce((result, item) => {
+        mostGuesses: state.guesses.reduce((result, item) => {
           if (item.frequence > result) return item.frequence;
           return result;
         }, 0),
