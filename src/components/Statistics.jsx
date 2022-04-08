@@ -71,8 +71,11 @@ const Statistics = () => {
                         width={
                           frequence === 0
                             ? 7
-                            : Math.floor(
-                                (frequence / state.averageGuesses) * 100
+                            : Math.max(
+                                Math.floor(
+                                  (frequence / state.averageGuesses) * 100
+                                ),
+                                7
                               )
                         }
                       />
