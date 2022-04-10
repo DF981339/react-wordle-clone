@@ -73,7 +73,7 @@ const Statistics = () => {
                             ? 7
                             : Math.max(
                                 Math.floor(
-                                  (frequence / state.averageGuesses) * 100
+                                  (frequence / state.mostGuesses) * 100
                                 ),
                                 7
                               )
