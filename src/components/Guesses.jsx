@@ -13,7 +13,13 @@ import {
   UPDATE_MOST_GUESSES,
 } from "../context/StatsProvider/statsReducer";
 import { useShowStats } from "../context/HeaderFunctionProvider";
-import { targetWord, CLEAR_BOARD, UPDATE_PLAYED } from "../context/reducer";
+import {
+  CLEAR_BOARD,
+  UPDATE_PLAYED,
+  UPDATE_SOLUTION,
+} from "../context/reducer";
+import useCountdown from "../utils/useCountdown";
+import useSolution from "../utils/useSolution";
 
 const Guesses = () => {
   const [state, dispatch] = useGame();
@@ -21,6 +27,8 @@ const Guesses = () => {
   const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
   const [statsState, statsDispatch] = useStats();
   const [showStats, setShowStats] = useShowStats();
+  const countDownTime = useCountdown();
+  const solution = useSolution();
 
   const firstUpdate = useRef(true);
 
@@ -31,7 +39,11 @@ const Guesses = () => {
       dispatch({ type: CLEAR_BOARD });
       setShowStats(false);
     }
-  }, [targetWord]);
+    dispatch({
+      type: UPDATE_SOLUTION,
+      payload: { solution: solution },
+    });
+  }, [solution]);
 
   useEffect(() => {
     let statsTimer;

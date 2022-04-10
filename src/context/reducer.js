@@ -1,8 +1,6 @@
 import { initialState } from "./initialState";
 import { v4 as uuidv4 } from "uuid";
-import dayjs from "dayjs";
 import dictionary from "../assets/data/dictionary.json";
-import targetWords from "../assets/data/targetWords.json";
 import winMessages from "../assets/data/winMessages.json";
 
 export const ADD_LETTER = "ADD_LETTER";
@@ -16,15 +14,11 @@ export const UPDATE_KEY_STATUS = "UPDATE_KEY_STATUS";
 export const CHECK_WIN_LOSE = "CHECK_WIN_LOSE";
 export const UPDATE_PLAYED = "UPDATE_PLAYED";
 export const CLEAR_BOARD = "CLEAR_BOARD";
+export const UPDATE_SOLUTION = "UPDATE_SOLUTION";
 
 export const FLIP_ANIMATION_DURATION = 500;
 export const BOUNCE_ANIMATION_DURATION = 500;
 export const WORD_LENGTH = 5;
-
-const startDate = dayjs("2022-01-01");
-const today = dayjs();
-const dayOffset = today.diff(startDate, "day");
-export const targetWord = targetWords[dayOffset];
 
 const getActiveTiles = (tilesArray) => {
   return tilesArray.filter((tile) => tile.status === "active");
@@ -64,15 +58,15 @@ const winTriesMsg = (numOfTries) => {
   );
 };
 
-const getTargetWordFreq = () => {
-  return targetWord.split("").reduce((freq, char) => {
+const getTargetWordFreq = (solution) => {
+  return solution.split("").reduce((freq, char) => {
     freq[char] ? freq[char]++ : (freq[char] = 1);
     return freq;
   }, {});
 };
 
-const checkRepeatLetter = (letter, index, guess) => {
-  const letterFreqOfTargetWord = getTargetWordFreq();
+const checkRepeatLetter = (letter, index, guess, solution) => {
+  const letterFreqOfTargetWord = getTargetWordFreq(solution);
   const freq = letterFreqOfTargetWord[letter];
   const indexesOfLetter = [];
 
@@ -92,7 +86,7 @@ const checkRepeatLetter = (letter, index, guess) => {
   // if it's not empty array, see if matches is the same as occurence
   if (
     restIndexes.length > 0 &&
-    restIndexes.filter((i) => targetWord[i] === letter).length === freq
+    restIndexes.filter((i) => solution[i] === letter).length === freq
   )
     return true;
 
@@ -261,7 +255,7 @@ const reducer = (state, action) => {
       );
 
       // letter is correct
-      if (currentTile.value === targetWord[action.payload.index]) {
+      if (currentTile.value === state.solution[action.payload.index]) {
         // set status to correct
         const correctTile = {
           ...currentTile,
@@ -279,14 +273,15 @@ const reducer = (state, action) => {
       }
 
       // letter is in wrong location
-      if (targetWord.includes(currentTile.value)) {
+      if (state.solution.includes(currentTile.value)) {
         // set status to wrong location
         const wrongLocationTile = {
           ...currentTile,
           status: checkRepeatLetter(
             currentTile.value,
             action.payload.index,
-            state.currentGuess
+            state.currentGuess,
+            state.solution
           )
             ? "wrong"
             : "wrong-location",
@@ -382,7 +377,7 @@ const reducer = (state, action) => {
         if (restTiles.length === 0) {
           return {
             ...state,
-            alerts: [addAlert(targetWord.toUpperCase())],
+            alerts: [addAlert(state.solution.toUpperCase())],
             win: "lost",
             disableInteraction: true,
           };
@@ -406,6 +401,12 @@ const reducer = (state, action) => {
 
     case CLEAR_BOARD:
       return initialState;
+
+    case UPDATE_SOLUTION:
+      return {
+        ...state,
+        solution: action.payload.solution,
+      };
 
     default:
       return state;

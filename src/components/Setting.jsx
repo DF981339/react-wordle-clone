@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useShowSetting } from "../context/HeaderFunctionProvider";
 import { useTheme } from "../context/ThemeProvider";
-import { targetWord } from "../context/reducer";
 import Switch from "./Switch";
 import CloseButton from "../shared/CloseButton";
 import FullHeightModal from "../shared/FullHeightModal";
+import useSolution from "../utils/useSolution";
 
 const year = new Date().getFullYear();
 
@@ -14,6 +14,7 @@ const Setting = () => {
   const [darkTheme, setDarkTheme] = useTheme();
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);
+  const solution = useSolution();
 
   const handleClose = () => {
     setSlideAnimation("down");
@@ -71,7 +72,7 @@ const Setting = () => {
 
       <footer>
         <div>© {year}, React Wordle Clone</div>
-        <div>Answer: {targetWord.toUpperCase()}</div>
+        <div>Answer: {solution.toUpperCase()}</div>
       </footer>
     </SettingContainer>
   );
