@@ -1,14 +1,87 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import styled from "styled-components";
-import { useWord } from "../context/WordProvider";
+import { useGame } from "../context/GameProvider";
 import Alerts from "./Alerts";
 import Tile from "./Tile";
 import useBoardSize from "../utils/useBoardSize";
+import { useStats } from "../context/StatsProvider/StatsProvider";
+import {
+  UPDATE_WIN_LOSE,
+  UPDATE_WIN_PERCENTAGE,
+  UPDATE_STREAK,
+  UPDATE_DISTRIBUTION,
+  UPDATE_MOST_GUESSES,
+} from "../context/StatsProvider/statsReducer";
+import { useShowStats } from "../context/HeaderFunctionProvider";
+import {
+  CLEAR_BOARD,
+  UPDATE_PLAYED,
+  UPDATE_SOLUTION,
+} from "../context/reducer";
+import useCountdown from "../utils/useCountdown";
+import useSolution from "../utils/useSolution";
 
 const Guesses = () => {
-  const [state, dispatch] = useWord();
+  const [state, dispatch] = useGame();
   const boardContainerRef = useRef(null);
   const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
+  const [statsState, statsDispatch] = useStats();
+  const [showStats, setShowStats] = useShowStats();
+  const countDownTime = useCountdown();
+  const solution = useSolution();
+
+  const firstUpdate = useRef(true);
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+    } else {
+      dispatch({ type: CLEAR_BOARD });
+      setShowStats(false);
+    }
+    dispatch({
+      type: UPDATE_SOLUTION,
+      payload: { solution: solution },
+    });
+  }, [solution]);
+
+  useEffect(() => {
+    let statsTimer;
+    if (!state.todayPlayed && state.win !== "in progress") {
+      statsDispatch({
+        type: UPDATE_WIN_LOSE,
+        payload: { winOrLose: state.win },
+      });
+      statsDispatch({
+        type: UPDATE_WIN_PERCENTAGE,
+      });
+      statsDispatch({
+        type: UPDATE_STREAK,
+        payload: { winOrLose: state.win },
+      });
+      statsDispatch({
+        type: UPDATE_DISTRIBUTION,
+        payload: { winRow: state.winRow },
+      });
+      statsDispatch({
+        type: UPDATE_MOST_GUESSES,
+      });
+      statsTimer = setTimeout(() => {
+        setShowStats(true);
+      }, 1000);
+      dispatch({
+        type: UPDATE_PLAYED,
+      });
+    }
+
+    if (state.todayPlayed) {
+      statsTimer = setTimeout(() => {
+        setShowStats(true);
+      }, 1000);
+    }
+
+    return () => clearTimeout(statsTimer);
+  }, [state.win]);
 
   return (
     <GuessContainer ref={boardContainerRef}>

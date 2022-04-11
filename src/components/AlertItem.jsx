@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { REMOVE_ALERT } from "../context/reducer";
-import { useWord } from "../context/WordProvider";
+import { useGame } from "../context/GameProvider";
 import { useTheme } from "../context/ThemeProvider";
 
 const AlertItem = ({ message }) => {
-  const [state, dispatch] = useWord();
+  const [state, dispatch] = useGame();
   const [darkTheme, setDarkTheme] = useTheme();
   const [opacity, setOpacity] = useState(1);
 

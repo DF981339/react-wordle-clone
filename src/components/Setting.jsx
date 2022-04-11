@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useSetting } from "../context/HeaderFunctionProvider";
+import { useShowSetting } from "../context/HeaderFunctionProvider";
 import { useTheme } from "../context/ThemeProvider";
-import { targetWord } from "../context/reducer";
 import Switch from "./Switch";
+import CloseButton from "../shared/CloseButton";
+import FullHeightModal from "../shared/FullHeightModal";
+import useSolution from "../utils/useSolution";
 
 const year = new Date().getFullYear();
 
 const Setting = () => {
-  const [showSetting, setShowSetting] = useSetting();
+  const [showSetting, setShowSetting] = useShowSetting();
   const [darkTheme, setDarkTheme] = useTheme();
   const [slideAnimation, setSlideAnimation] = useState("up");
   const [slideOutNow, setSlideOutNow] = useState(false);
+  const solution = useSolution();
 
   const handleClose = () => {
     setSlideAnimation("down");
@@ -26,20 +29,7 @@ const Setting = () => {
     >
       <header>
         <div className="title">SETTINGS</div>
-        <div className="close">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            onClick={handleClose}
-          >
-            <path
-              fill="var(--color-tone-1)"
-              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-            ></path>
-          </svg>
-        </div>
+        <CloseButton darkTheme={darkTheme} onClick={handleClose} />
       </header>
 
       <div className="setting">
@@ -82,7 +72,7 @@ const Setting = () => {
 
       <footer>
         <div>© {year}, React Wordle Clone</div>
-        <div>Answer: {targetWord.toUpperCase()}</div>
+        <div>Answer: {solution.toUpperCase()}</div>
       </footer>
     </SettingContainer>
   );
@@ -90,21 +80,7 @@ const Setting = () => {
 
 export default Setting;
 
-const SettingContainer = styled.section`
-  position: absolute;
-  color: ${(props) =>
-    props.darkTheme
-      ? "var(--dark-mode-header-text)"
-      : "var(--light-mode-header-text)"};
-  background-color: ${(props) =>
-    props.darkTheme ? "var(--dark-mode-bg)" : "var(--light-mode-bg)"};
-  z-index: 2;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-
+const SettingContainer = styled(FullHeightModal)`
   header {
     display: flex;
     justify-content: center;
@@ -114,24 +90,6 @@ const SettingContainer = styled.section`
     .title {
       font-weight: bold;
       font-size: clamp(16px, 3vmin, 18px);
-    }
-
-    .close {
-      fill: ${(props) =>
-        props.darkTheme
-          ? "var(--dark-mode-header-icon)"
-          : "var(--light-mode-header-icon)"};
-      position: absolute;
-      right: 0;
-      user-select: none;
-      cursor: pointer;
-
-      &:hover {
-        fill: ${(props) =>
-          props.darkTheme
-            ? "var(--dark-mode-header-text)"
-            : "var(--light-mode-header-text)"};
-      }
     }
   }
 
