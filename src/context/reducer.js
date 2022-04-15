@@ -15,6 +15,7 @@ export const CHECK_WIN_LOSE = "CHECK_WIN_LOSE";
 export const UPDATE_PLAYED = "UPDATE_PLAYED";
 export const CLEAR_BOARD = "CLEAR_BOARD";
 export const UPDATE_SOLUTION = "UPDATE_SOLUTION";
+export const SET_LAST_PLAYED = "SET_LAST_PLAYED";
 
 export const FLIP_ANIMATION_DURATION = 500;
 export const BOUNCE_ANIMATION_DURATION = 500;
@@ -400,12 +401,21 @@ const reducer = (state, action) => {
       };
 
     case CLEAR_BOARD:
-      return initialState;
+      return {
+        ...initialState,
+        lastPlayed: state.lastPlayed,
+      };
 
     case UPDATE_SOLUTION:
       return {
         ...state,
         solution: action.payload.solution,
+      };
+
+    case SET_LAST_PLAYED:
+      return {
+        ...state,
+        lastPlayed: action.payload.lastPlayed,
       };
 
     default:
