@@ -279,4 +279,5 @@ export const initialState = {
   currentGuess: "",
   todayPlayed: false,
   solution: "",
+  lastPlayed: "",
 };

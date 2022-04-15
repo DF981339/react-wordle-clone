@@ -17,9 +17,19 @@ import {
   CLEAR_BOARD,
   UPDATE_PLAYED,
   UPDATE_SOLUTION,
+  SET_LAST_PLAYED,
 } from "../context/reducer";
-import useCountdown from "../utils/useCountdown";
 import useSolution from "../utils/useSolution";
+import dayjs from "dayjs";
+
+var isToday = require("dayjs/plugin/isToday");
+dayjs.extend(isToday);
+
+const isYesterdayPlayed = (lastPlayed) => {
+  const todayZeroOClock = dayjs().format("YYYY-MM-DD");
+  const diff = dayjs(todayZeroOClock).diff(lastPlayed, "hour");
+  return diff > 24 ? false : true;
+};
 
 const Guesses = () => {
   const [state, dispatch] = useGame();
@@ -27,18 +37,14 @@ const Guesses = () => {
   const { boardHeight, boardWidth } = useBoardSize(boardContainerRef);
   const [statsState, statsDispatch] = useStats();
   const [showStats, setShowStats] = useShowStats();
-  const countDownTime = useCountdown();
   const solution = useSolution();
 
-  const firstUpdate = useRef(true);
-
   useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-    } else {
+    if (state.lastPlayed !== "" && !dayjs(state.lastPlayed).isToday()) {
       dispatch({ type: CLEAR_BOARD });
       setShowStats(false);
     }
+
     dispatch({
       type: UPDATE_SOLUTION,
       payload: { solution: solution },
@@ -57,7 +63,10 @@ const Guesses = () => {
       });
       statsDispatch({
         type: UPDATE_STREAK,
-        payload: { winOrLose: state.win },
+        payload: {
+          winOrLose: state.win,
+          isYesterdayPlayed: isYesterdayPlayed(state.lastPlayed),
+        },
       });
       statsDispatch({
         type: UPDATE_DISTRIBUTION,
@@ -71,6 +80,10 @@ const Guesses = () => {
       }, 1000);
       dispatch({
         type: UPDATE_PLAYED,
+      });
+      dispatch({
+        type: SET_LAST_PLAYED,
+        payload: { lastPlayed: dayjs().format() },
       });
     }
 
