@@ -64,22 +64,25 @@ export const statsReducer = (state, action) => {
     case UPDATE_STREAK:
       // reset streaks if no play
       let newCurrentStreak;
+      let newMaxStreak;
 
       if (action.payload.isYesterdayPlayed) {
         newCurrentStreak =
           action.payload.winOrLose === "won" ? state.currentStreak + 1 : 0;
+        newMaxStreak =
+          action.payload.winOrLose === "won" &&
+          state.currentStreak + 1 > state.maxStreak
+            ? state.currentStreak + 1
+            : state.maxStreak;
       } else {
         newCurrentStreak = action.payload.winOrLose === "won" ? 1 : 0;
+        newMaxStreak = state.maxStreak;
       }
 
       return {
         ...state,
         currentStreak: newCurrentStreak,
-        maxStreak:
-          action.payload.winOrLose === "won" &&
-          state.currentStreak + 1 > state.maxStreak
-            ? state.currentStreak + 1
-            : state.maxStreak,
+        maxStreak: newMaxStreak,
       };
 
     case UPDATE_DISTRIBUTION:
